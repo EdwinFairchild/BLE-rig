@@ -1,0 +1,24 @@
+{
+    "max32655_board1": {
+        "desc": "Bottom board",
+        "daplink": "04091702bdf10c0400000000000000000000000097969906",
+        "uart0": "D3073ICQ"
+        
+    },
+    "max32655_board2": {
+        "desc": "Second Board",
+        "daplink": "04091702bdf10c0400000000000000000000000097969906",
+        "uart0": "D3073ICQ"
+  
+    },
+    "max32665_board1": {
+	"desc": "ME14",
+	"daplink": "0409000052fb0cd700000000000000000000000097969906",
+	"uart0": "D37O5ZRS"
+    },
+    "max32690_board_w1": {
+    "desc": "marked sn 24, for timing test, ",
+	"daplink": "0409170228a74ea700000000000000000000000097969906",
+	"uart0": "D30ALJQS"
+    }
+}
