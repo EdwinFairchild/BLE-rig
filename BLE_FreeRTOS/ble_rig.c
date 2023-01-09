@@ -121,22 +121,6 @@ uint8_t datsWpWriteCback(dmConnId_t connId, uint16_t handle, uint8_t operation,
     memcpy(&temp, pValue, sizeof(powerOptions_t));
     // calculate crc32 starting from second element
     crc32(&temp.packet_type, sizeof(powerOptions_t) - 4, &crcResult);
-    if (crcResult == temp.crc32) {
-      // process message
-      uint32_t valueToSend =
-          (temp.me14_state << 0 | temp.me17_state << 1 | temp.me18_state << 2);
-      xTaskNotify(vTask1_hdl, valueToSend, eSetValueWithOverwrite);
-
-uint8_t datsWpWriteCback(dmConnId_t connId, uint16_t handle, uint8_t operation,
-                         uint16_t offset, uint16_t len, uint8_t *pValue,
-                         attsAttr_t *pAttr) {
-  powerOptions_t temp;
-  uint32_t crcResult = 0x00000000;
-  int err = 0;
-  if (len == sizeof(powerOptions_t)) {
-    memcpy(&temp, pValue, sizeof(powerOptions_t));
-    // calculate crc32 starting from second element
-    crc32(&temp.packet_type, sizeof(powerOptions_t) - 4, &crcResult);
 
     // valid packet
     if (crcResult == temp.crc32) {
