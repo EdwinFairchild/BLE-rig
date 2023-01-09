@@ -423,11 +423,40 @@ static void trimStart(void) {
   }
 }
 
+// /*************************************************************************************************/
+// /*!
+//  *  \brief  ATTS write callback for secured data service.
+//  *
+//  *  \return ATT status.
+//  */
+// /*************************************************************************************************/
+// uint8_t secDatWriteCback(dmConnId_t connId, uint16_t handle, uint8_t
+// operation,
+//                          uint16_t offset, uint16_t len, uint8_t *pValue,
+//                          attsAttr_t *pAttr) {
+//   uint8_t str[] = "Secure data received!";
+//   APP_TRACE_INFO0(">> Received secure data <<");
+//   APP_TRACE_INFO0((const char *)pValue);
+
+//   /* Write data recevied into characteristic */
+//   AttsSetAttr(SEC_DAT_HDL, len, (uint8_t *)pValue);
+//   /* if notifications are enabled send one */
+//   if (AttsCccEnabled(connId, DATS_SEC_DAT_CCC_IDX)) {
+//     /* send notification */
+//     AttsHandleValueNtf(connId, SEC_DAT_HDL, sizeof(str), str);
+//   }
+//   return ATT_SUCCESS;
+// }
+
 /*************************************************************************************************/
 /*!
  *  \brief  ATTS write callback for secured data service.
  *
- *  \return ATT status.
+ *  \brief  Add device to resolving list.
+ *
+ *  \param  dbHdl   Device DB record handle.
+ *
+ *  \return None.
  */
 /*************************************************************************************************/
 uint8_t secDatWriteCback(dmConnId_t connId, uint16_t handle, uint8_t operation,
