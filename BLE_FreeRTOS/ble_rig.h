@@ -66,8 +66,8 @@ typedef struct __attribute__((__packed__)) {
   packet_t packet_type;
   power_state_t me14_state;
   power_state_t me17_state;
+  power_state_t me17_main_state;
   power_state_t me18_state;
-  uint32_t magicNum;
 
 } powerOptions_t;
 

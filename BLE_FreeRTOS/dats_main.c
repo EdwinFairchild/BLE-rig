@@ -226,10 +226,10 @@ static const uint8_t datsScanDataDisc[] = {
     /*! device name */
     5,                      /*! length */
     DM_ADV_TYPE_LOCAL_NAME, /*! AD type */
-    'D',
-    'A',
-    'T',
-    'S'};
+    'B',
+    'R',
+    'I',
+    'G'};
 
 /**************************************************************************************************
   Client Characteristic Configuration Descriptors

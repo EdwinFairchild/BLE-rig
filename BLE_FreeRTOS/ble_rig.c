@@ -5,11 +5,24 @@
 #define RED_LED_PIN MXC_GPIO_PIN_OUT
 #define RED_LED_PORT MXC_GPIO_PORT_OUT
 
+#define ME17_MAIN_PORT MXC_GPIO0
+#define ME17_MAIN_PIN MXC_GPIO_PIN_25
+
+#define ME17_PORT MXC_GPIO0
+#define ME17_PIN MXC_GPIO_PIN_24
+
+#define ME14_PORT MXC_GPIO0
+#define ME14_PIN MXC_GPIO_PIN_20
+
+#define ME18_PORT MXC_GPIO1
+#define ME18_PIN MXC_GPIO_PIN_8
+
 /* Mutual exclusion (mutex) semaphores */
 SemaphoreHandle_t xGPIOmutex;
 mxc_gpio_cfg_t gpio_out;
 /* Task IDs */
 TaskHandle_t vTask1_hdl;
+powerOptions_t power_ctl;
 // http://home.thep.lu.se/~bjorn/crc/
 /*************************************************************************************************/
 /*!
@@ -51,11 +64,21 @@ void crc32(const void *data, size_t n_bytes, uint32_t *crc) {
 void config_gpio(void) {
 
   /* Setup output pin. */
-  gpio_out.port = RED_LED_PORT;
-  gpio_out.mask = RED_LED_PIN;
+  gpio_out.port = ME17_MAIN_PORT;
+  gpio_out.mask = ME17_MAIN_PIN;
   gpio_out.pad = MXC_GPIO_PAD_NONE;
   gpio_out.func = MXC_GPIO_FUNC_OUT;
   gpio_out.vssel = MXC_GPIO_VSSEL_VDDIOH;
+  MXC_GPIO_Config(&gpio_out);
+
+  gpio_out.mask = ME17_PIN;
+  MXC_GPIO_Config(&gpio_out);
+
+  gpio_out.mask = ME14_PIN;
+  MXC_GPIO_Config(&gpio_out);
+
+  gpio_out.port = ME18_PORT;
+  gpio_out.mask = ME18_PIN;
   MXC_GPIO_Config(&gpio_out);
 }
 
@@ -65,24 +88,23 @@ void vTask1(void *pvParameters) {
 
   /* Get task start time */
   xLastWakeTime = xTaskGetTickCount();
-  uint32_t notificationValue;
+  powerOptions_t *powerOptions;
+
   bool state = false;
   while (1) {
-    xTaskNotifyWait(0x00, 0xFFFFFFFF, &notificationValue, portMAX_DELAY);
-    APP_TRACE_INFO3("ME14: %d\r\nME17: %d \r\nME18: %d",
-                    (notificationValue & 0x01), (notificationValue & 0x02),
-                    (notificationValue & 0x03));
-
-    if (state == true) {
-      MXC_GPIO_OutSet(gpio_out.port, gpio_out.mask);
-      state = false;
+    xTaskNotifyWait(0x00, 0xFFFFFFFF, &powerOptions, portMAX_DELAY);
+    // APP_TRACE_INFO3("ME14: %d\r\nME17: %d \r\nME18: %d",
+    //                 (notificationValue & 0x01), (notificationValue & 0x02),
+    //                 (notificationValue & 0x03));
+    if (powerOptions->me17_main_state) {
+      APP_TRACE_INFO0("ME17 Main turned on");
+      MXC_GPIO_OutSet(ME17_MAIN_PORT, ME17_MAIN_PIN);
     } else {
-      MXC_GPIO_OutClr(gpio_out.port, gpio_out.mask);
-      state = true;
+      APP_TRACE_INFO0("ME17 Main turned off");
+      MXC_GPIO_OutClr(ME17_MAIN_PORT, ME17_MAIN_PIN);
     }
 
     // if (xSemaphoreTake(xGPIOmutex, portMAX_DELAY) == pdTRUE) {
-
     //     /* Return the mutex after we have modified the hardware state */
     //     xSemaphoreGive(xGPIOmutex);
     // }
@@ -99,11 +121,13 @@ uint8_t datsWpWriteCback(dmConnId_t connId, uint16_t handle, uint8_t operation,
     memcpy(&temp, pValue, sizeof(powerOptions_t));
     // calculate crc32 starting from second element
     crc32(&temp.packet_type, sizeof(powerOptions_t) - 4, &crcResult);
+
+    // valid packet
     if (crcResult == temp.crc32) {
-      // process message
-      uint32_t valueToSend =
-          (temp.me14_state << 0 | temp.me17_state << 1 | temp.me18_state << 2);
-      xTaskNotify(vTask1_hdl, valueToSend, eSetValueWithOverwrite);
+      // copy to cached version
+      memcpy(&power_ctl, &temp, sizeof(powerOptions_t));
+      // Xnotify value passed is address of powerOptions
+      xTaskNotify(vTask1_hdl, &power_ctl, eSetValueWithOverwrite);
 
     } else {
       // TODO implement retry

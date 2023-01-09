@@ -68,11 +68,10 @@ typedef struct __attribute__((__packed__)) {
   packet_t packet_type;
   power_state_t me14_state;
   power_state_t me17_state;
+  power_state_t me17_main_state;
   power_state_t me18_state;
-  uint32_t magicNum;
 
 } powerOptions_t;
-
 /**************************************************************************************************
 Macros
 **************************************************************************************************/
@@ -586,10 +585,10 @@ static void datcScanReport(dmEvt_t *pMsg) {
       ((pData = DmFindAdType(DM_ADV_TYPE_LOCAL_NAME, pMsg->scanReport.len,
                              pMsg->scanReport.pData)) != NULL)) {
     /* check length and device name */
-    if (pData[DM_AD_LEN_IDX] >= 4 && (pData[DM_AD_DATA_IDX] == 'D') &&
-        (pData[DM_AD_DATA_IDX + 1] == 'A') &&
-        (pData[DM_AD_DATA_IDX + 2] == 'T') &&
-        (pData[DM_AD_DATA_IDX + 3] == 'S')) {
+    if (pData[DM_AD_LEN_IDX] >= 4 && (pData[DM_AD_DATA_IDX] == 'B') &&
+        (pData[DM_AD_DATA_IDX + 1] == 'R') &&
+        (pData[DM_AD_DATA_IDX + 2] == 'I') &&
+        (pData[DM_AD_DATA_IDX + 3] == 'G')) {
       connect = TRUE;
     }
   }
@@ -723,13 +722,17 @@ static void datcPrivAddDevToResListInd(dmEvt_t *pMsg) {
 static void datcSendData(dmConnId_t connId) {
   uint8_t str[] = "hello world";
   uint32_t crcResult = 0;
+  static count = 0;
   powerOptions_t temp;
   temp.packet_type = POWER_OPTIONS;
-  temp.magicNum = 42;
   temp.me14_state = ON;
   temp.me17_state = OFF;
   temp.me18_state = ON;
-
+  if (count % 2)
+    temp.me17_main_state = ON;
+  else
+    temp.me17_main_state = OFF;
+  count++;
   crc32(&temp.packet_type, sizeof(powerOptions_t) - 4, &crcResult);
   temp.crc32 = crcResult;
 
