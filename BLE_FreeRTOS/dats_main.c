@@ -86,7 +86,7 @@ enum {
   DATS_GATT_SC_CCC_IDX, /*! GATT service, service changed characteristic */
   DATS_WP_DAT_CCC_IDX,  /*! Arm Ltd. proprietary service, data transfer
                            characteristic */
-                        //   DATS_SEC_DAT_CCC_IDX,
+  DATS_SEC_DAT_CCC_IDX,
   DATS_NUM_CCC_IDX
 };
 
@@ -127,7 +127,7 @@ static const appSecCfg_t datsSecCfg = {
     DM_KEY_DIST_IRK,                   /*! Initiator key distribution flags */
     DM_KEY_DIST_LTK | DM_KEY_DIST_IRK, /*! Responder key distribution flags */
     FALSE, /*! TRUE if Out-of-band pairing data is present */
-    FALSE  /*! TRUE to initiate security upon connection */
+    TRUE   /*! TRUE to initiate security upon connection */
 };
 
 /* OOB UART parameters */
@@ -243,8 +243,8 @@ static const attsCccSet_t datsCccSet[DATS_NUM_CCC_IDX] = {
      DM_SEC_LEVEL_NONE}, /* DATS_GATT_SC_CCC_IDX */
     {WP_DAT_CH_CCC_HDL, ATT_CLIENT_CFG_NOTIFY,
      DM_SEC_LEVEL_NONE}, /* DATS_WP_DAT_CCC_IDX */
-                         // {SEC_DAT_CH_CCC_HDL, ATT_CLIENT_CFG_NOTIFY,
-                         //  DM_SEC_LEVEL_NONE} /* DATS_SEC_DAT_CCC_IDX */
+    {SEC_DAT_CH_CCC_HDL, ATT_CLIENT_CFG_NOTIFY,
+     DM_SEC_LEVEL_NONE} /* DATS_SEC_DAT_CCC_IDX */
 };
 
 /**************************************************************************************************
@@ -447,6 +447,34 @@ static void trimStart(void) {
 //   }
 //   return ATT_SUCCESS;
 // }
+
+/*************************************************************************************************/
+/*!
+ *  \brief  ATTS write callback for secured data service.
+ *
+ *  \brief  Add device to resolving list.
+ *
+ *  \param  dbHdl   Device DB record handle.
+ *
+ *  \return None.
+ */
+/*************************************************************************************************/
+uint8_t secDatWriteCback(dmConnId_t connId, uint16_t handle, uint8_t operation,
+                         uint16_t offset, uint16_t len, uint8_t *pValue,
+                         attsAttr_t *pAttr) {
+  uint8_t str[] = "Secure data received!";
+  APP_TRACE_INFO0(">> Received secure data <<");
+  APP_TRACE_INFO0((const char *)pValue);
+
+  /* Write data recevied into characteristic */
+  AttsSetAttr(SEC_DAT_HDL, len, (uint8_t *)pValue);
+  /* if notifications are enabled send one */
+  if (AttsCccEnabled(connId, DATS_SEC_DAT_CCC_IDX)) {
+    /* send notification */
+    AttsHandleValueNtf(connId, SEC_DAT_HDL, sizeof(str), str);
+  }
+  return ATT_SUCCESS;
+}
 
 /*************************************************************************************************/
 /*!
@@ -973,8 +1001,8 @@ void DatsStart(void) {
   SvcWpCbackRegister(NULL, datsWpWriteCback);
   SvcWpAddGroup();
 
-  //   /*register secure data write callback */
-  //   SvcSecDataCbackRegister(NULL, secDatWriteCback);
+  /*register secure data write callback */
+  SvcSecDataCbackRegister(NULL, secDatWriteCback);
   /* Register secure data service */
   SvcSecDataAddGroup();
 
