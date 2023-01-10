@@ -1,10 +1,5 @@
 #include "ble_rig.h"
 
-#define MXC_GPIO_PORT_OUT MXC_GPIO0
-#define MXC_GPIO_PIN_OUT MXC_GPIO_PIN_19
-#define RED_LED_PIN MXC_GPIO_PIN_OUT
-#define RED_LED_PORT MXC_GPIO_PORT_OUT
-
 #define ME17_MAIN_PORT MXC_GPIO0
 #define ME17_MAIN_PIN MXC_GPIO_PIN_25
 
@@ -80,6 +75,7 @@ void config_gpio(void) {
   gpio_out.port = ME18_PORT;
   gpio_out.mask = ME18_PIN;
   MXC_GPIO_Config(&gpio_out);
+  APP_TRACE_INFO1("Size of enum %d", sizeof(packet_t));
 }
 
 void vTask1(void *pvParameters) {
@@ -93,21 +89,54 @@ void vTask1(void *pvParameters) {
   bool state = false;
   while (1) {
     xTaskNotifyWait(0x00, 0xFFFFFFFF, &powerOptions, portMAX_DELAY);
-    // APP_TRACE_INFO3("ME14: %d\r\nME17: %d \r\nME18: %d",
-    //                 (notificationValue & 0x01), (notificationValue & 0x02),
-    //                 (notificationValue & 0x03));
-    if (powerOptions->me17_main_state) {
-      APP_TRACE_INFO0("ME17 Main turned on");
+    if (powerOptions->all_on == true) {
       MXC_GPIO_OutSet(ME17_MAIN_PORT, ME17_MAIN_PIN);
-    } else {
-      APP_TRACE_INFO0("ME17 Main turned off");
-      MXC_GPIO_OutClr(ME17_MAIN_PORT, ME17_MAIN_PIN);
-    }
+      MXC_GPIO_OutSet(ME17_PORT, ME17_PIN);
+      MXC_GPIO_OutSet(ME14_PORT, ME14_PIN);
+      MXC_GPIO_OutSet(ME18_PORT, ME18_PIN);
+      APP_TRACE_INFO0("All on");
 
-    // if (xSemaphoreTake(xGPIOmutex, portMAX_DELAY) == pdTRUE) {
-    //     /* Return the mutex after we have modified the hardware state */
-    //     xSemaphoreGive(xGPIOmutex);
-    // }
+    } else if (powerOptions->all_off == true) {
+      MXC_GPIO_OutClr(ME17_MAIN_PORT, ME17_MAIN_PIN);
+      MXC_GPIO_OutClr(ME17_PORT, ME17_PIN);
+      MXC_GPIO_OutClr(ME14_PORT, ME14_PIN);
+      MXC_GPIO_OutClr(ME18_PORT, ME18_PIN);
+      APP_TRACE_INFO0("All off");
+
+    } else {
+
+      if (powerOptions->me17_main_state) {
+        APP_TRACE_INFO0("ME17 Main turned on");
+        MXC_GPIO_OutSet(ME17_MAIN_PORT, ME17_MAIN_PIN);
+      } else {
+        APP_TRACE_INFO0("ME17 Main turned off");
+        MXC_GPIO_OutClr(ME17_MAIN_PORT, ME17_MAIN_PIN);
+      }
+
+      if (powerOptions->me17_state) {
+        APP_TRACE_INFO0("ME17 turned on");
+        MXC_GPIO_OutSet(ME17_PORT, ME17_PIN);
+      } else {
+        APP_TRACE_INFO0("ME17 turned off");
+        MXC_GPIO_OutClr(ME17_PORT, ME17_PIN);
+      }
+
+      if (powerOptions->me14_state) {
+        APP_TRACE_INFO0("ME14 turned on");
+        MXC_GPIO_OutSet(ME14_PORT, ME14_PIN);
+      } else {
+        APP_TRACE_INFO0("ME14 turned off");
+        MXC_GPIO_OutClr(ME14_PORT, ME14_PIN);
+      }
+
+      if (powerOptions->me18_state) {
+        APP_TRACE_INFO0("ME18 turned on");
+        MXC_GPIO_OutSet(ME18_PORT, ME18_PIN);
+      } else {
+        APP_TRACE_INFO0("ME18 turned off");
+        MXC_GPIO_OutClr(ME18_PORT, ME18_PIN);
+      }
+    }
   }
 }
 extern TaskHandle_t vTask1_hdl;
@@ -118,22 +147,25 @@ uint8_t datsWpWriteCback(dmConnId_t connId, uint16_t handle, uint8_t operation,
   uint32_t crcResult = 0x00000000;
   int err = 0;
   if (len == sizeof(powerOptions_t)) {
-    memcpy(&temp, pValue, sizeof(powerOptions_t));
     // calculate crc32 starting from second element
-    crc32(&temp.packet_type, sizeof(powerOptions_t) - 4, &crcResult);
 
-    // valid packet
-    if (crcResult == temp.crc32) {
-      // copy to cached version
-      memcpy(&power_ctl, &temp, sizeof(powerOptions_t));
-      // Xnotify value passed is address of powerOptions
-      xTaskNotify(vTask1_hdl, &power_ctl, eSetValueWithOverwrite);
+    memcpy(&power_ctl, pValue, sizeof(powerOptions_t));
+    // Xnotify value passed is address of powerOptions
+    xTaskNotify(vTask1_hdl, &power_ctl, eSetValueWithOverwrite);
+    // // crc32 to validate packet
+    // memcpy(&temp, pValue, sizeof(powerOptions_t));
+    // crc32(&temp.packet_type, sizeof(powerOptions_t) - 4, &crcResult);
+    // if (crcResult == temp.crc32) {
+    //   // copy to cached version
+    //   memcpy(&power_ctl, &temp, sizeof(powerOptions_t));
+    //   // Xnotify value passed is address of powerOptions
+    //   xTaskNotify(vTask1_hdl, &power_ctl, eSetValueWithOverwrite);
 
-    } else {
-      // TODO implement retry
-      APP_TRACE_INFO0("CRC did not mathc");
-      err++;
-    }
+    // } else {
+    //   // TODO implement retry
+    //   APP_TRACE_INFO0("CRC did not mathc");
+    //   err++;
+    // }
 
   } else {
     APP_TRACE_INFO0("Len did not match");

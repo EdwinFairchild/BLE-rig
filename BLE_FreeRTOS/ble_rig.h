@@ -62,12 +62,14 @@ typedef enum __attribute__((__packed__)) {
 typedef enum __attribute__((__packed__)) { OFF, ON } power_state_t;
 
 typedef struct __attribute__((__packed__)) {
-  uint32_t crc32;
+  // uint32_t crc32;
   packet_t packet_type;
   power_state_t me14_state;
   power_state_t me17_state;
   power_state_t me17_main_state;
   power_state_t me18_state;
+  bool all_on;
+  bool all_off;
 
 } powerOptions_t;
 

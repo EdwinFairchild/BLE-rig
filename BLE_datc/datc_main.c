@@ -70,6 +70,8 @@ typedef struct __attribute__((__packed__)) {
   power_state_t me17_state;
   power_state_t me17_main_state;
   power_state_t me18_state;
+  bool all_on;
+  bool all_off;
 
 } powerOptions_t;
 /**************************************************************************************************

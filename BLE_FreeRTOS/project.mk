@@ -6,7 +6,7 @@
 # https://github.com/Analog-Devices-MSDK/VSCode-Maxim/tree/develop#build-configuration
 
 # **********************************************************
-
+BOARD=FTHR_Apps_P1
 # Enable FreeRTOS library
 LIB_FREERTOS = 1
 

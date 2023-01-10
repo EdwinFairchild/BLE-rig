@@ -34,7 +34,7 @@ class MainInterface(QMainWindow):
     bleLoop = None
     serialLoop = None
     connected_state = False
-    ble_rig_addr = "00:18:80:28:88:FB"
+    ble_rig_addr = "00:18:80:30:88:FB"
 
     disconnectSignal = pyqtSignal(bool)
 
@@ -71,6 +71,7 @@ def exitFunc():
             task.cancel()
     except Exception as e:
         pass
+
 
     # ------------------------------------------------------------------------
 if __name__ == '__main__':
