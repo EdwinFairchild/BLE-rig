@@ -39,6 +39,9 @@ fileLen = 0
 *******************************************************************************************'''
 class Power_Ctl_File(QThread):
     bleLoop= None
+        #TODO : make buttons also update the file and update the previous value so it does not trigger a
+        # state change twice
+    prevME18 = "0"
     def run(self):
         while self.bleLoop.connect==True:
             self.read_power_ctl()
@@ -47,32 +50,26 @@ class Power_Ctl_File(QThread):
             
 
     def read_power_ctl(self):
-        # Using readlines()
-        
+
         file1 = open('power_ctl.log', 'r')
         Lines = file1.readlines()
         
         count = 0
         # Strips the newline character
         for line in Lines:
-            #print("Line{}: {}".format(count, line.strip()))
-            if line.strip() == "1":
-                if count == 1 :
-                    self.bleLoop.ME14_STATE = (1).to_bytes(1, byteorder='little', signed=False)
-                    self.bleLoop.ALL_OFF = (0).to_bytes(1, byteorder='little', signed=False)
-                if count == 2 :
-                    self.bleLoop.ME17_STATE = (1).to_bytes(1, byteorder='little', signed=False)
-                    self.bleLoop.ALL_OFF = (0).to_bytes(1, byteorder='little', signed=False)
-                if count == 3 :
-                    self.bleLoop.ME17_MAIN_STATE = (1).to_bytes(1, byteorder='little', signed=False)
-                    self.bleLoop.ALL_OFF = (0).to_bytes(1, byteorder='little', signed=False)
-                if count == 4 :
-                    print("me18 turned on")
-                    self.bleLoop.ME18_STATE = (1).to_bytes(1, byteorder='little', signed=False)
-                    self.bleLoop.ALL_OFF = (0).to_bytes(1, byteorder='little', signed=False)
-                
-                self.bleLoop.writeChar = True
-                print(f"Count {count} line :{line.strip()}")
+            if count == 4:
+                if self.prevME18 != line.strip():
+                    self.prevME18 = line.strip()
+                    if line.strip() == "1":
+                        
+                        self.bleLoop.ME18_STATE = (1).to_bytes(1, byteorder='little', signed=False)
+                        self.bleLoop.ALL_OFF = (0).to_bytes(1, byteorder='little', signed=False)
+                    else:
+                        self.bleLoop.ME18_STATE = (0).to_bytes(1, byteorder='little', signed=False)
+                        self.bleLoop.ALL_ON = (0).to_bytes(1, byteorder='little', signed=False)
+                    self.bleLoop.writeChar = True
+
+   
             count += 1
 
 class BleakLoop(QThread):
