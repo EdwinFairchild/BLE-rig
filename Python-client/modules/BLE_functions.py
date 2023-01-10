@@ -22,13 +22,58 @@ fileLen = 0
 '''******************************************************************************************
         Scan for devices
 *******************************************************************************************'''
-
+'''        
+        //uint32_t crc32
+        packet_t packet_type;
+        power_state_t me14_state;
+        power_state_t me17_state;
+        power_state_t me17_main_state;
+        power_state_t me18_state;
+        bool all_on;
+        bool all_off;
+'''
 '''******************************************************************************************
         Implements an infinite asyncio loop charged with registering
         notifications, read/write and signal emition of each event to
         GUI application
 *******************************************************************************************'''
+class Power_Ctl_File(QThread):
+    bleLoop= None
+    def run(self):
+        while self.bleLoop.connect==True:
+            self.read_power_ctl()
+            QThread.msleep(250)
 
+            
+
+    def read_power_ctl(self):
+        # Using readlines()
+        
+        file1 = open('power_ctl.log', 'r')
+        Lines = file1.readlines()
+        
+        count = 0
+        # Strips the newline character
+        for line in Lines:
+            #print("Line{}: {}".format(count, line.strip()))
+            if line.strip() == "1":
+                if count == 1 :
+                    self.bleLoop.ME14_STATE = (1).to_bytes(1, byteorder='little', signed=False)
+                    self.bleLoop.ALL_OFF = (0).to_bytes(1, byteorder='little', signed=False)
+                if count == 2 :
+                    self.bleLoop.ME17_STATE = (1).to_bytes(1, byteorder='little', signed=False)
+                    self.bleLoop.ALL_OFF = (0).to_bytes(1, byteorder='little', signed=False)
+                if count == 3 :
+                    self.bleLoop.ME17_MAIN_STATE = (1).to_bytes(1, byteorder='little', signed=False)
+                    self.bleLoop.ALL_OFF = (0).to_bytes(1, byteorder='little', signed=False)
+                if count == 4 :
+                    print("me18 turned on")
+                    self.bleLoop.ME18_STATE = (1).to_bytes(1, byteorder='little', signed=False)
+                    self.bleLoop.ALL_OFF = (0).to_bytes(1, byteorder='little', signed=False)
+                
+                self.bleLoop.writeChar = True
+                print(f"Count {count} line :{line.strip()}")
+            count += 1
 
 class BleakLoop(QThread):
     # bleak client stuff

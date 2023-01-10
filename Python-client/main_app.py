@@ -32,6 +32,7 @@ class MainInterface(QMainWindow):
 
     bleLoop = None
     serialLoop = None
+    PowerCtlFile_thread = None
     connected_state = False
     ble_rig_addr = "00:18:80:30:88:FB"
 
@@ -66,6 +67,7 @@ class MainInterface(QMainWindow):
 
 def exitFunc():
     global interface
+    
     try:
         interface.bleLoop.disconnect_triggered = True
         while interface.bleLoop.connect==True:

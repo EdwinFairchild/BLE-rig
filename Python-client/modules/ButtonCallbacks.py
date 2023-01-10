@@ -36,10 +36,13 @@ def connect(interface):
         try:
             # connection stuff
             interface.bleLoop = ble_ctl.BleakLoop()
+            interface.PowerCtlFile_thread = ble_ctl.Power_Ctl_File()
+            interface.PowerCtlFile_thread.bleLoop = interface.bleLoop
             interface.bleLoop.disconnectSignal.connect(lambda state: Slots.disconnect(interface, state))
             interface.bleLoop.ble_address = interface.ble_rig_addr
             interface.connected_address = interface.bleLoop.ble_address
             interface.bleLoop.start()
+            interface.PowerCtlFile_thread.start()
             interface.connected_state = True
         except Exception as err:
             Console.errMsg(err)
@@ -119,7 +122,6 @@ def btnAllOff(interface):
     interface.bleLoop.ME17_STATE = (0).to_bytes(1, byteorder='little', signed=False)
     interface.bleLoop.ME17_MAIN_STATE = (0).to_bytes(1, byteorder='little', signed=False)
     interface.bleLoop.writeChar = True
-
 
 def register_button_callbacks(interface):
     # interface.ui.btn_connect.clicked.connect(
