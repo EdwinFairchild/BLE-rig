@@ -43,6 +43,13 @@ class BleakLoop(QThread):
     writeChar = False
 
     power_setting = None
+    PACKET_TYPE = (0).to_bytes(1, byteorder='little', signed=False)
+    ME14_STATE = (0).to_bytes(1, byteorder='little', signed=False)
+    ME17_STATE = (0).to_bytes(1, byteorder='little', signed=False)
+    ME17_MAIN_STATE = (0).to_bytes(1, byteorder='little', signed=False)
+    ME18_STATE = (0).to_bytes(1, byteorder='little', signed=False)
+    ALL_ON = (0).to_bytes(1, byteorder='little', signed=False)
+    ALL_OFF = (0).to_bytes(1, byteorder='little', signed=False)
 
     def run(self):
         self.connect = True
@@ -51,8 +58,10 @@ class BleakLoop(QThread):
     # -------------------------------------------------------------------------
     def handle_disconnect(self, _: BleakClient):
         # cancelling all tasks effectively ends the program
-        self.disconnectSignal.emit(True)
+        #Not working
+        #self.disconnectSignal.emit(True)
         Console.log("Disconnected")
+        self.connect = False
         # in case this happened because of a failed update
 
         # for task in asyncio.all_tasks():
@@ -65,7 +74,6 @@ class BleakLoop(QThread):
             await client.disconnect()
             # self.handle_disconnect(client)
             self.disconnect_triggered = False
-            # self.connect = False
             self.disconnectSignal.emit(True)
         except Exception as err:
             Console.errMsg(err)
@@ -101,24 +109,15 @@ class BleakLoop(QThread):
         ARM_Propietary_Data_Characteristic = "e0262760-08c2-11e1-9073-0e8ac72e0001"
 
         try:
-            if self.power_setting == "ME17_MAIN":
-                PACKET_TYPE = (0).to_bytes(1, byteorder='little', signed=False)
-                ME14_STATE = (0).to_bytes(1, byteorder='little', signed=False)
-                ME17_STATE = (0).to_bytes(1, byteorder='little', signed=False)
-                ME17_MAIN_STATE = (1).to_bytes(
-                    1, byteorder='little', signed=False)
-                ME18_STATE = (0).to_bytes(1, byteorder='little', signed=False)
-                ALL_ON = (0).to_bytes(1, byteorder='little', signed=False)
-                ALL_OFF = (0).to_bytes(1, byteorder='little', signed=False)
-                packet_to_send = PACKET_TYPE + ME14_STATE + ME17_STATE + \
-                    ME17_MAIN_STATE + ME18_STATE + ALL_ON + ALL_OFF
+            
+            packet_to_send = self.PACKET_TYPE + self.ME14_STATE + self.ME17_STATE + \
+                self.ME17_MAIN_STATE + self.ME18_STATE + self.ALL_ON + self.ALL_OFF
 
             await client.write_gatt_char(ARM_Propietary_Data_Characteristic, bytearray(packet_to_send))
 
         except Exception as err:
             Console.errMsg(err)
         self.writeChar = False
-    # -------------------------------------------------------------------------
     # -------------------------------------------------------------------------
 
     async def bleakLoop(self):
@@ -132,6 +131,5 @@ class BleakLoop(QThread):
                 if self.disconnect_triggered == True:
                     await self.disconenctBLE(client)
                 # -------------- if a single char needs to be read
-
                 if self.writeChar == True:
                     await self.writeCharCallback(client)

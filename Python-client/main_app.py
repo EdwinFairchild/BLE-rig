@@ -22,7 +22,6 @@ import atexit
 from asyncqt import QEventLoop
 import webbrowser
 
-
 QtWidgets.QApplication.setAttribute(
     QtCore.Qt.AA_EnableHighDpiScaling, True)  # enable highdpi scaling
 QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
@@ -37,6 +36,7 @@ class MainInterface(QMainWindow):
     ble_rig_addr = "00:18:80:30:88:FB"
 
     disconnectSignal = pyqtSignal(bool)
+    
 
     def __init__(self):
         QMainWindow.__init__(self)
@@ -65,6 +65,14 @@ class MainInterface(QMainWindow):
 
 
 def exitFunc():
+    global interface
+    try:
+        interface.bleLoop.disconnect_triggered = True
+        while interface.bleLoop.connect==True:
+            pass
+        #     print(interface.connected_state)
+    except Exception as e:
+        print(e)
     try:
         # close any on running tasks
         for task in asyncio.all_tasks():
@@ -79,7 +87,6 @@ if __name__ == '__main__':
     # pyrcc5 image.qrc -o image_rc.py
     # compile gui
     os.system("pyuic5 -x gui.ui -o gui.py")
-    atexit.register(exitFunc)
     app = qtw.QApplication(sys.argv)
     app.setStyle('Fusion')
 
@@ -88,5 +95,7 @@ if __name__ == '__main__':
 
     interface = MainInterface()
     interface.show()
+    ButtonCallbacks.connect(interface)
+    atexit.register(exitFunc)
 
     app.exec_()

@@ -14,50 +14,151 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(826, 369)
+        MainWindow.resize(1042, 607)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(self.centralwidget)
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.centralwidget)
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.btn_all_on = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_all_on.setMinimumSize(QtCore.QSize(0, 50))
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_all_on.setFont(font)
+        self.btn_all_on.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.btn_all_on.setObjectName("btn_all_on")
+        self.verticalLayout_4.addWidget(self.btn_all_on)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
-        self.horizontalLayout.setSpacing(0)
+        self.horizontalLayout.setSpacing(5)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout()
         self.verticalLayout_3.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.btn_connect = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_connect.setMinimumSize(QtCore.QSize(0, 0))
-        self.btn_connect.setMaximumSize(QtCore.QSize(99999, 99999))
-        self.btn_connect.setObjectName("btn_connect")
-        self.verticalLayout_3.addWidget(self.btn_connect)
         self.horizontalLayout.addLayout(self.verticalLayout_3)
         self.verticalLayout = QtWidgets.QVBoxLayout()
-        self.verticalLayout.setSpacing(1)
+        self.verticalLayout.setSpacing(5)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.btn_me17 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_me17.setMinimumSize(QtCore.QSize(0, 0))
-        self.btn_me17.setMaximumSize(QtCore.QSize(99999, 99999))
-        self.btn_me17.setObjectName("btn_me17")
-        self.verticalLayout.addWidget(self.btn_me17)
         self.btn_main_me17 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_main_me17.setMinimumSize(QtCore.QSize(0, 0))
+        self.btn_main_me17.setMinimumSize(QtCore.QSize(0, 50))
         self.btn_main_me17.setMaximumSize(QtCore.QSize(99999, 99999))
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_main_me17.setFont(font)
+        self.btn_main_me17.setStyleSheet("QPushButton{\n"
+"    color: rgb(0, 0, 0);\n"
+"        background-color: rgb(170,200,255);\n"
+"    border:none;\n"
+"border-radius:5px;\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    color: rgb(28, 28, 28);\n"
+"        background-color: rgb(140,170,255);\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    \n"
+"        color: rgb(28, 28, 28);\n"
+"    background-color: rgb(110,140,255);\n"
+"}")
         self.btn_main_me17.setObjectName("btn_main_me17")
         self.verticalLayout.addWidget(self.btn_main_me17)
+        self.btn_me17 = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_me17.setMinimumSize(QtCore.QSize(0, 50))
+        self.btn_me17.setMaximumSize(QtCore.QSize(99999, 99999))
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_me17.setFont(font)
+        self.btn_me17.setStyleSheet("QPushButton{\n"
+"    color: rgb(0, 0, 0);\n"
+"        background-color: rgb(170,200,255);\n"
+"    border:none;\n"
+"border-radius:5px;\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    color: rgb(28, 28, 28);\n"
+"        background-color: rgb(140,170,255);\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    \n"
+"        color: rgb(28, 28, 28);\n"
+"    background-color: rgb(110,140,255);\n"
+"}")
+        self.btn_me17.setObjectName("btn_me17")
+        self.verticalLayout.addWidget(self.btn_me17)
         self.verticalLayout.setStretch(0, 1)
         self.verticalLayout.setStretch(1, 1)
         self.horizontalLayout.addLayout(self.verticalLayout)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_2.setSpacing(1)
+        self.verticalLayout_2.setSpacing(5)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.btn_me14 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_me14.setMinimumSize(QtCore.QSize(0, 0))
+        self.btn_me14.setMinimumSize(QtCore.QSize(0, 50))
         self.btn_me14.setMaximumSize(QtCore.QSize(99999, 99999))
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_me14.setFont(font)
+        self.btn_me14.setStyleSheet("QPushButton{\n"
+"    color: rgb(0, 0, 0);\n"
+"        background-color: rgb(170,200,255);\n"
+"    border:none;\n"
+"border-radius:5px;\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    color: rgb(28, 28, 28);\n"
+"        background-color: rgb(140,170,255);\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    \n"
+"        color: rgb(28, 28, 28);\n"
+"    background-color: rgb(110,140,255);\n"
+"}")
         self.btn_me14.setObjectName("btn_me14")
         self.verticalLayout_2.addWidget(self.btn_me14)
         self.btn_me18 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_me18.setMinimumSize(QtCore.QSize(0, 0))
+        self.btn_me18.setMinimumSize(QtCore.QSize(0, 50))
         self.btn_me18.setMaximumSize(QtCore.QSize(99999, 99999))
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_me18.setFont(font)
+        self.btn_me18.setStyleSheet("QPushButton{\n"
+"    color: rgb(0, 0, 0);\n"
+"        background-color: rgb(170,200,255);\n"
+"    border:none;\n"
+"border-radius:5px;\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    color: rgb(28, 28, 28);\n"
+"        background-color: rgb(140,170,255);\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    \n"
+"        color: rgb(28, 28, 28);\n"
+"    background-color: rgb(110,140,255);\n"
+"}")
         self.btn_me18.setObjectName("btn_me18")
         self.verticalLayout_2.addWidget(self.btn_me18)
         self.verticalLayout_2.setStretch(0, 1)
@@ -65,10 +166,23 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addLayout(self.verticalLayout_2)
         self.horizontalLayout.setStretch(1, 1)
         self.horizontalLayout.setStretch(2, 1)
-        self.horizontalLayout_2.addLayout(self.horizontalLayout)
+        self.verticalLayout_4.addLayout(self.horizontalLayout)
+        self.btn_all_off = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_all_off.setMinimumSize(QtCore.QSize(0, 50))
+        font = QtGui.QFont()
+        font.setPointSize(16)
+        font.setBold(True)
+        font.setWeight(75)
+        self.btn_all_off.setFont(font)
+        self.btn_all_off.setStyleSheet("background-color: rgb(255, 255, 255);")
+        self.btn_all_off.setObjectName("btn_all_off")
+        self.verticalLayout_4.addWidget(self.btn_all_off)
+        self.verticalLayout_4.setStretch(0, 2)
+        self.verticalLayout_4.setStretch(1, 1)
+        self.verticalLayout_4.setStretch(2, 2)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 826, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1042, 26))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -81,11 +195,12 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.btn_connect.setText(_translate("MainWindow", "*ME17*"))
+        self.btn_all_on.setText(_translate("MainWindow", "All On"))
+        self.btn_main_me17.setText(_translate("MainWindow", "ME17_Main"))
         self.btn_me17.setText(_translate("MainWindow", "ME17"))
-        self.btn_main_me17.setText(_translate("MainWindow", "*ME17*"))
         self.btn_me14.setText(_translate("MainWindow", "ME14"))
         self.btn_me18.setText(_translate("MainWindow", "ME18"))
+        self.btn_all_off.setText(_translate("MainWindow", "All OFF"))
 
 
 if __name__ == "__main__":

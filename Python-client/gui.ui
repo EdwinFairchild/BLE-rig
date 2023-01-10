@@ -6,76 +6,61 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>826</width>
-    <height>369</height>
+    <width>1042</width>
+    <height>607</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
+   <layout class="QVBoxLayout" name="verticalLayout_4" stretch="2,1,2">
+    <item>
+     <widget class="QPushButton" name="btn_all_on">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>All On</string>
+      </property>
+     </widget>
+    </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1,1">
       <property name="spacing">
-       <number>0</number>
+       <number>5</number>
       </property>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0">
+       <layout class="QVBoxLayout" name="verticalLayout_3" stretch="">
         <property name="sizeConstraint">
          <enum>QLayout::SetNoConstraint</enum>
         </property>
-        <item>
-         <widget class="QPushButton" name="btn_connect">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>99999</width>
-            <height>99999</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>*ME17*</string>
-          </property>
-         </widget>
-        </item>
        </layout>
       </item>
       <item>
        <layout class="QVBoxLayout" name="verticalLayout" stretch="1,1">
         <property name="spacing">
-         <number>1</number>
+         <number>5</number>
         </property>
-        <item>
-         <widget class="QPushButton" name="btn_me17">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>99999</width>
-            <height>99999</height>
-           </size>
-          </property>
-          <property name="text">
-           <string>ME17</string>
-          </property>
-         </widget>
-        </item>
         <item>
          <widget class="QPushButton" name="btn_main_me17">
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>0</height>
+            <height>50</height>
            </size>
           </property>
           <property name="maximumSize">
@@ -84,8 +69,83 @@
             <height>99999</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+	color: rgb(0, 0, 0);
+		background-color: rgb(170,200,255);
+	border:none;
+border-radius:5px;
+
+}
+
+QPushButton:hover{
+	color: rgb(28, 28, 28);
+		background-color: rgb(140,170,255);
+
+}
+
+QPushButton:pressed{
+	
+		color: rgb(28, 28, 28);
+	background-color: rgb(110,140,255);
+}</string>
+          </property>
           <property name="text">
-           <string>*ME17*</string>
+           <string>ME17_Main</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btn_me17">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>99999</width>
+            <height>99999</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+	color: rgb(0, 0, 0);
+		background-color: rgb(170,200,255);
+	border:none;
+border-radius:5px;
+
+}
+
+QPushButton:hover{
+	color: rgb(28, 28, 28);
+		background-color: rgb(140,170,255);
+
+}
+
+QPushButton:pressed{
+	
+		color: rgb(28, 28, 28);
+	background-color: rgb(110,140,255);
+}</string>
+          </property>
+          <property name="text">
+           <string>ME17</string>
           </property>
          </widget>
         </item>
@@ -94,14 +154,14 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,1">
         <property name="spacing">
-         <number>1</number>
+         <number>5</number>
         </property>
         <item>
          <widget class="QPushButton" name="btn_me14">
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>0</height>
+            <height>50</height>
            </size>
           </property>
           <property name="maximumSize">
@@ -109,6 +169,34 @@
             <width>99999</width>
             <height>99999</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+	color: rgb(0, 0, 0);
+		background-color: rgb(170,200,255);
+	border:none;
+border-radius:5px;
+
+}
+
+QPushButton:hover{
+	color: rgb(28, 28, 28);
+		background-color: rgb(140,170,255);
+
+}
+
+QPushButton:pressed{
+	
+		color: rgb(28, 28, 28);
+	background-color: rgb(110,140,255);
+}</string>
           </property>
           <property name="text">
            <string>ME14</string>
@@ -120,7 +208,7 @@
           <property name="minimumSize">
            <size>
             <width>0</width>
-            <height>0</height>
+            <height>50</height>
            </size>
           </property>
           <property name="maximumSize">
@@ -128,6 +216,34 @@
             <width>99999</width>
             <height>99999</height>
            </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+	color: rgb(0, 0, 0);
+		background-color: rgb(170,200,255);
+	border:none;
+border-radius:5px;
+
+}
+
+QPushButton:hover{
+	color: rgb(28, 28, 28);
+		background-color: rgb(140,170,255);
+
+}
+
+QPushButton:pressed{
+	
+		color: rgb(28, 28, 28);
+	background-color: rgb(110,140,255);
+}</string>
           </property>
           <property name="text">
            <string>ME18</string>
@@ -138,6 +254,29 @@
       </item>
      </layout>
     </item>
+    <item>
+     <widget class="QPushButton" name="btn_all_off">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="text">
+       <string>All OFF</string>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -145,7 +284,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>826</width>
+     <width>1042</width>
      <height>26</height>
     </rect>
    </property>
