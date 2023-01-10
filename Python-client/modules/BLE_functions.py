@@ -122,8 +122,10 @@ class BleakLoop(QThread):
     # -------------------------------------------------------------------------
 
     async def bleakLoop(self):
-
-        async with BleakClient(self.ble_address, disconnected_callback=self.handle_disconnect) as client:
+        device = await BleakScanner.find_device_by_filter(
+            lambda d, ad: d.name and d.name.lower() == "brig"
+        )
+        async with BleakClient(device, disconnected_callback=self.handle_disconnect) as client:
             while self.connect == True:
                 await asyncio.sleep(0.005)
                 # check the flag to disconnect
