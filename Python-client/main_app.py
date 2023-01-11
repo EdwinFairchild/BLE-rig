@@ -12,6 +12,7 @@ from gui import Ui_MainWindow
 from modules import ButtonCallbacks
 from modules import BLE_functions as ble_ctl
 from modules import Console
+from modules import Slots
 from bleak import *
 import asyncio
 import platform
@@ -35,22 +36,20 @@ class MainInterface(QMainWindow):
     PowerCtlFile_thread = None
     connected_state = False
     ble_rig_addr = "00:18:80:30:88:FB"
-
     disconnectSignal = pyqtSignal(bool)
     
-
     def __init__(self):
         QMainWindow.__init__(self)
         # setup gui
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
-        # self.ui.frm_otas.setVisible(False)
-        # Console.console_init(self)
-        # ListCallbacks.register_list_callbacks(self)
         ButtonCallbacks.register_button_callbacks(self)
-        # MiscHelpers.init_icons(self)
-        # Console.log("BLE-PyDex initialized")
-        # Console.log_status()
+        Slots.devices["me17_main"] = [self.ui.btn_main_me17, 1,False]
+        Slots.devices["me17"] = [self.ui.btn_me17, 2,False]
+        Slots.devices["me14"] = [self.ui.btn_me14, 3,False]
+        Slots.devices["me18"] = [self.ui.btn_me18, 4,False]
+        print(f"The value is : {int(Slots.devices['me17_main'][2])}")
+        ButtonCallbacks.connect(self)
 
     # ------------------------------------------------------------------------
     # def eventFilter(self, source, event):
@@ -97,7 +96,6 @@ if __name__ == '__main__':
 
     interface = MainInterface()
     interface.show()
-    ButtonCallbacks.connect(interface)
     atexit.register(exitFunc)
 
     app.exec_()

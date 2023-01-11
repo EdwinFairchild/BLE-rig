@@ -84,15 +84,6 @@ class BleakLoop(QThread):
     # used to trigger write char
     writeChar = False
 
-    power_setting = None
-    PACKET_TYPE = (0).to_bytes(1, byteorder='little', signed=False)
-    ME14_STATE = (0).to_bytes(1, byteorder='little', signed=False)
-    ME17_STATE = (0).to_bytes(1, byteorder='little', signed=False)
-    ME17_MAIN_STATE = (0).to_bytes(1, byteorder='little', signed=False)
-    ME18_STATE = (0).to_bytes(1, byteorder='little', signed=False)
-    ALL_ON = (0).to_bytes(1, byteorder='little', signed=False)
-    ALL_OFF = (0).to_bytes(1, byteorder='little', signed=False)
-
     def run(self):
         self.connect = True
         asyncio.run(self.bleakLoop())
@@ -148,12 +139,25 @@ class BleakLoop(QThread):
         bool all_off;
 
         """
+        #power state index in the Slots.devices dictionary
+        power_state_index = 2
+        # the char. the device is expecting settings on
+
+        # TODO implement crc32
+        
         ARM_Propietary_Data_Characteristic = "e0262760-08c2-11e1-9073-0e8ac72e0001"
+        ME17_MAIN_STATE = (int(Slots.devices['me17_main'][power_state_index])).to_bytes(1, byteorder='little', signed=False)
+        PACKET_TYPE = (0).to_bytes(1, byteorder='little', signed=False)
+        ME14_STATE = (int(Slots.devices['me14'][power_state_index])).to_bytes(1, byteorder='little', signed=False)
+        ME17_STATE = (int(Slots.devices['me17'][power_state_index])).to_bytes(1, byteorder='little', signed=False)
+        ME18_STATE = (int(Slots.devices['me18'][power_state_index])).to_bytes(1, byteorder='little', signed=False)
+        ALL_ON = (0).to_bytes(1, byteorder='little', signed=False)
+        ALL_OFF = (0).to_bytes(1, byteorder='little', signed=False)
 
         try:
             
-            packet_to_send = self.PACKET_TYPE + self.ME14_STATE + self.ME17_STATE + \
-                self.ME17_MAIN_STATE + self.ME18_STATE + self.ALL_ON + self.ALL_OFF
+            packet_to_send = PACKET_TYPE + ME14_STATE + ME17_STATE + \
+                ME17_MAIN_STATE + ME18_STATE + ALL_ON + ALL_OFF
 
             await client.write_gatt_char(ARM_Propietary_Data_Characteristic, bytearray(packet_to_send))
 

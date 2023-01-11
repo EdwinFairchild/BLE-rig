@@ -14,13 +14,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1042, 607)
+        MainWindow.resize(711, 483)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.btn_all_on = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_all_on.setMinimumSize(QtCore.QSize(0, 50))
+        self.btn_all_on.setMinimumSize(QtCore.QSize(0, 100))
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
@@ -40,61 +40,25 @@ class Ui_MainWindow(object):
         self.verticalLayout.setSpacing(5)
         self.verticalLayout.setObjectName("verticalLayout")
         self.btn_main_me17 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_main_me17.setMinimumSize(QtCore.QSize(0, 50))
+        self.btn_main_me17.setMinimumSize(QtCore.QSize(0, 100))
         self.btn_main_me17.setMaximumSize(QtCore.QSize(99999, 99999))
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
         font.setWeight(75)
         self.btn_main_me17.setFont(font)
-        self.btn_main_me17.setStyleSheet("QPushButton{\n"
-"    color: rgb(0, 0, 0);\n"
-"        background-color: rgb(170,200,255);\n"
-"    border:none;\n"
-"border-radius:5px;\n"
-"\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"    color: rgb(28, 28, 28);\n"
-"        background-color: rgb(140,170,255);\n"
-"\n"
-"}\n"
-"\n"
-"QPushButton:pressed{\n"
-"    \n"
-"        color: rgb(28, 28, 28);\n"
-"    background-color: rgb(110,140,255);\n"
-"}")
+        self.btn_main_me17.setStyleSheet("")
         self.btn_main_me17.setObjectName("btn_main_me17")
         self.verticalLayout.addWidget(self.btn_main_me17)
         self.btn_me17 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_me17.setMinimumSize(QtCore.QSize(0, 50))
+        self.btn_me17.setMinimumSize(QtCore.QSize(0, 100))
         self.btn_me17.setMaximumSize(QtCore.QSize(99999, 99999))
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
         font.setWeight(75)
         self.btn_me17.setFont(font)
-        self.btn_me17.setStyleSheet("QPushButton{\n"
-"    color: rgb(0, 0, 0);\n"
-"        background-color: rgb(170,200,255);\n"
-"    border:none;\n"
-"border-radius:5px;\n"
-"\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"    color: rgb(28, 28, 28);\n"
-"        background-color: rgb(140,170,255);\n"
-"\n"
-"}\n"
-"\n"
-"QPushButton:pressed{\n"
-"    \n"
-"        color: rgb(28, 28, 28);\n"
-"    background-color: rgb(110,140,255);\n"
-"}")
+        self.btn_me17.setStyleSheet("")
         self.btn_me17.setObjectName("btn_me17")
         self.verticalLayout.addWidget(self.btn_me17)
         self.verticalLayout.setStretch(0, 1)
@@ -104,61 +68,25 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.setSpacing(5)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.btn_me14 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_me14.setMinimumSize(QtCore.QSize(0, 50))
+        self.btn_me14.setMinimumSize(QtCore.QSize(0, 100))
         self.btn_me14.setMaximumSize(QtCore.QSize(99999, 99999))
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
         font.setWeight(75)
         self.btn_me14.setFont(font)
-        self.btn_me14.setStyleSheet("QPushButton{\n"
-"    color: rgb(0, 0, 0);\n"
-"        background-color: rgb(170,200,255);\n"
-"    border:none;\n"
-"border-radius:5px;\n"
-"\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"    color: rgb(28, 28, 28);\n"
-"        background-color: rgb(140,170,255);\n"
-"\n"
-"}\n"
-"\n"
-"QPushButton:pressed{\n"
-"    \n"
-"        color: rgb(28, 28, 28);\n"
-"    background-color: rgb(110,140,255);\n"
-"}")
+        self.btn_me14.setStyleSheet("")
         self.btn_me14.setObjectName("btn_me14")
         self.verticalLayout_2.addWidget(self.btn_me14)
         self.btn_me18 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_me18.setMinimumSize(QtCore.QSize(0, 50))
+        self.btn_me18.setMinimumSize(QtCore.QSize(0, 100))
         self.btn_me18.setMaximumSize(QtCore.QSize(99999, 99999))
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
         font.setWeight(75)
         self.btn_me18.setFont(font)
-        self.btn_me18.setStyleSheet("QPushButton{\n"
-"    color: rgb(0, 0, 0);\n"
-"        background-color: rgb(170,200,255);\n"
-"    border:none;\n"
-"border-radius:5px;\n"
-"\n"
-"}\n"
-"\n"
-"QPushButton:hover{\n"
-"    color: rgb(28, 28, 28);\n"
-"        background-color: rgb(140,170,255);\n"
-"\n"
-"}\n"
-"\n"
-"QPushButton:pressed{\n"
-"    \n"
-"        color: rgb(28, 28, 28);\n"
-"    background-color: rgb(110,140,255);\n"
-"}")
+        self.btn_me18.setStyleSheet("")
         self.btn_me18.setObjectName("btn_me18")
         self.verticalLayout_2.addWidget(self.btn_me18)
         self.verticalLayout_2.setStretch(0, 1)
@@ -168,7 +96,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout.setStretch(2, 1)
         self.verticalLayout_4.addLayout(self.horizontalLayout)
         self.btn_all_off = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_all_off.setMinimumSize(QtCore.QSize(0, 50))
+        self.btn_all_off.setMinimumSize(QtCore.QSize(0, 100))
         font = QtGui.QFont()
         font.setPointSize(16)
         font.setBold(True)
@@ -182,7 +110,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.setStretch(2, 2)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1042, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 711, 22))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)

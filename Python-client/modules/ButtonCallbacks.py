@@ -12,6 +12,10 @@ import time
 BUFFER_SIZE = 8192
 fileLen = 0
 
+on_fore = [0, 0, 0]
+on_back = [170, 200, 255]
+off_fore = [0, 0, 0]
+off_back = [255, 255, 255]
 
 def get_crc32():
     global fileLen
@@ -29,10 +33,8 @@ def get_crc32():
 
 
 def connect(interface):
-
     # Establish and maintain Bleak connection
     if interface.connected_state == False:
-        
         try:
             # connection stuff
             interface.bleLoop = ble_ctl.BleakLoop()
@@ -47,7 +49,6 @@ def connect(interface):
         except Exception as err:
             Console.errMsg(err)
             interface.connected_state = False
-  
     else:
         try:
             # connection stuff
@@ -59,69 +60,38 @@ def connect(interface):
 
 
 def btnMainMe17(interface):
-    current_val = int.from_bytes(interface.bleLoop.ME17_MAIN_STATE, "little")
-    if current_val == 1:
-        interface.bleLoop.ME17_MAIN_STATE = (0).to_bytes(1, byteorder='little', signed=False)
-    else:
-        interface.bleLoop.ME17_MAIN_STATE = (1).to_bytes(1, byteorder='little', signed=False)
-        interface.bleLoop.ALL_OFF = (0).to_bytes(1, byteorder='little', signed=False)
-    interface.bleLoop.writeChar = True
+    state = not Slots.devices["me17_main"][2]
+    Slots.set_device_power_settings(interface,"me17_main",state)
+    
     # ------------------------------------------------------------------------
 
 
 def btnMe17(interface):
-    current_val = int.from_bytes(interface.bleLoop.ME17_STATE, "little")
-    if current_val == 1:
-        interface.bleLoop.ME17_STATE = (0).to_bytes(1, byteorder='little', signed=False)
-    else:
-        interface.bleLoop.ME17_STATE = (1).to_bytes(1, byteorder='little', signed=False)
-        interface.bleLoop.ALL_OFF = (0).to_bytes(1, byteorder='little', signed=False)
-    interface.bleLoop.writeChar = True
+    state = not Slots.devices["me17"][2]
+    Slots.set_device_power_settings(interface,"me17",state)
     # ------------------------------------------------------------------------
 
 
 def btnMe14(interface):
-    current_val = int.from_bytes(interface.bleLoop.ME14_STATE, "little")
-    if current_val == 1:
-        interface.bleLoop.ME14_STATE = (0).to_bytes(1, byteorder='little', signed=False)
-    else:
-        interface.bleLoop.ME14_STATE = (1).to_bytes(1, byteorder='little', signed=False)
-        interface.bleLoop.ALL_OFF = (0).to_bytes(1, byteorder='little', signed=False)
-    interface.bleLoop.writeChar = True
+    state = not Slots.devices["me14"][2]
+    Slots.set_device_power_settings(interface,"me14",state)
 
     # ------------------------------------------------------------------------
 
 
 def btnMe18(interface):
-    current_val = int.from_bytes(interface.bleLoop.ME18_STATE, "little")
-    if current_val == 1:
-        interface.bleLoop.ME18_STATE = (0).to_bytes(1, byteorder='little', signed=False)
-    else:
-        interface.bleLoop.ME18_STATE = (1).to_bytes(1, byteorder='little', signed=False)
-        interface.bleLoop.ALL_OFF = (0).to_bytes(1, byteorder='little', signed=False)
-    interface.bleLoop.writeChar = True
+    state = not Slots.devices["me18"][2]
+    Slots.set_device_power_settings(interface,"me18",state)
     # ------------------------------------------------------------------------
 
 
 def btnAllOn(interface):
-    interface.bleLoop.ALL_OFF = (0).to_bytes(1, byteorder='little', signed=False)
-    interface.bleLoop.ALL_ON = (1).to_bytes(1, byteorder='little', signed=False)
-    interface.bleLoop.ME18_STATE = (1).to_bytes(1, byteorder='little', signed=False)
-    interface.bleLoop.ME14_STATE = (1).to_bytes(1, byteorder='little', signed=False)
-    interface.bleLoop.ME17_STATE = (1).to_bytes(1, byteorder='little', signed=False)
-    interface.bleLoop.ME17_MAIN_STATE = (1).to_bytes(1, byteorder='little', signed=False)
-    interface.bleLoop.writeChar = True
+    pass
     # ------------------------------------------------------------------------
 
 
 def btnAllOff(interface):
-    interface.bleLoop.ALL_OFF = (1).to_bytes(1, byteorder='little', signed=False)
-    interface.bleLoop.ALL_ON = (0).to_bytes(1, byteorder='little', signed=False)
-    interface.bleLoop.ME18_STATE = (0).to_bytes(1, byteorder='little', signed=False)
-    interface.bleLoop.ME14_STATE = (0).to_bytes(1, byteorder='little', signed=False)
-    interface.bleLoop.ME17_STATE = (0).to_bytes(1, byteorder='little', signed=False)
-    interface.bleLoop.ME17_MAIN_STATE = (0).to_bytes(1, byteorder='little', signed=False)
-    interface.bleLoop.writeChar = True
+    pass
 
 def register_button_callbacks(interface):
     # interface.ui.btn_connect.clicked.connect(
