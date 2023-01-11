@@ -1,9 +1,18 @@
 #include "ble_rig.h"
 
-#define MXC_GPIO_PORT_OUT MXC_GPIO0
-#define MXC_GPIO_PIN_OUT MXC_GPIO_PIN_18
-#define RED_LED_PIN MXC_GPIO_PIN_OUT
-#define RED_LED_PORT MXC_GPIO_PORT_OUT
+#define ME17_MAIN_PORT MXC_GPIO0
+#define ME17_MAIN_PIN MXC_GPIO_PIN_25
+
+#define ME17_PORT MXC_GPIO0
+#define ME17_PIN MXC_GPIO_PIN_24
+
+#define ME14_PORT MXC_GPIO0
+#define ME14_PIN MXC_GPIO_PIN_20
+
+#define ME18_PORT MXC_GPIO1
+#define ME18_PIN MXC_GPIO_PIN_8
+
+powerOptions_t power_ctl;
 // http://home.thep.lu.se/~bjorn/crc/
 /*************************************************************************************************/
 /*!
@@ -42,14 +51,25 @@ void crc32(const void *data, size_t n_bytes, uint32_t *crc)
     }
 }
 
-void config_gpio(void)
-{
-    mxc_gpio_cfg_t gpio_out;
-    /* Setup output pin. */
-    gpio_out.port = RED_LED_PORT;
-    gpio_out.mask = RED_LED_PIN;
-    gpio_out.pad = MXC_GPIO_PAD_NONE;
-    gpio_out.func = MXC_GPIO_FUNC_OUT;
-    gpio_out.vssel = MXC_GPIO_VSSEL_VDDIOH;
-    MXC_GPIO_Config(&gpio_out);
+mxc_gpio_cfg_t gpio_out;
+void config_gpio(void) {
+
+  /* Setup output pin. */
+  gpio_out.port = ME17_MAIN_PORT;
+  gpio_out.mask = ME17_MAIN_PIN;
+  gpio_out.pad = MXC_GPIO_PAD_NONE;
+  gpio_out.func = MXC_GPIO_FUNC_OUT;
+  gpio_out.vssel = MXC_GPIO_VSSEL_VDDIOH;
+  MXC_GPIO_Config(&gpio_out);
+
+  gpio_out.mask = ME17_PIN;
+  MXC_GPIO_Config(&gpio_out);
+
+  gpio_out.mask = ME14_PIN;
+  MXC_GPIO_Config(&gpio_out);
+
+  gpio_out.port = ME18_PORT;
+  gpio_out.mask = ME18_PIN;
+  MXC_GPIO_Config(&gpio_out);
+  APP_TRACE_INFO1("Size of enum %d", sizeof(packet_t));
 }

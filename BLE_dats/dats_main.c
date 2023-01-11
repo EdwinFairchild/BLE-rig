@@ -56,28 +56,21 @@
   BLE-rig
 **************************************************************************************************/
 #include "ble_rig.h"
-typedef enum __attribute__ ((__packed__)) {
-    POWER_OPTIONS,
-    RESERVED
 
-}packet_t;
+#define ME17_MAIN_PORT MXC_GPIO0
+#define ME17_MAIN_PIN MXC_GPIO_PIN_25
 
-typedef enum __attribute__ ((__packed__)) {
-    OFF,
-    ON
-}power_state_t;
+#define ME17_PORT MXC_GPIO0
+#define ME17_PIN MXC_GPIO_PIN_24
 
-typedef struct __attribute__ ((__packed__))
-{
-    uint32_t crc32;
-    packet_t packet_type;
-    power_state_t me14_state;
-    power_state_t me17_state;
-    power_state_t me18_state;
-    uint32_t magicNum;
+#define ME14_PORT MXC_GPIO0
+#define ME14_PIN MXC_GPIO_PIN_20
 
-}powerOptions_t;
+#define ME18_PORT MXC_GPIO1
+#define ME18_PIN MXC_GPIO_PIN_8
 
+
+extern powerOptions_t power_ctl;
 
 /**************************************************************************************************
   Macros
@@ -243,10 +236,10 @@ static const uint8_t datsScanDataDisc[] = {
     /*! device name */
     5, /*! length */
     DM_ADV_TYPE_LOCAL_NAME, /*! AD type */
-    'D',
-    'A',
-    'T',
-    'S'
+    'B',
+    'R',
+    'I',
+    'G'
 };
 
 /**************************************************************************************************
@@ -451,38 +444,67 @@ static void trimStart(void)
 uint8_t datsWpWriteCback(dmConnId_t connId, uint16_t handle, uint8_t operation, uint16_t offset,
                          uint16_t len, uint8_t *pValue, attsAttr_t *pAttr)
 {
-    powerOptions_t temp;
-    uint32_t crcResult = 0x00000000;
-    int err = 0;
-    if (len == sizeof(powerOptions_t))
-    {
-        memcpy(&temp ,pValue ,sizeof(powerOptions_t));
-        // calculate crc32 starting from second element
-        crc32(&temp.packet_type,sizeof(powerOptions_t)-4,&crcResult);
-        if(crcResult == temp.crc32)
-        {
-            //process message
-            APP_TRACE_INFO3("ME14: %d \r\nME17: %d \r\nME18: %d",temp.me14_state, temp.me17_state,temp.me18_state);
-            
-        }
-        else    {
-            APP_TRACE_INFO0("CRC did not mathc");
-            err++;
-        }
-        
+powerOptions_t temp;
+  uint32_t crcResult = 0x00000000;
+  int err = 0;
+  if (len == sizeof(powerOptions_t)) {
+    // calculate crc32 starting from second element
 
-    }
-    else{
-        APP_TRACE_INFO0("Len did not match");
-    }
-    // if (len < 64) {
-    //     /* print received data if not a speed test message */
-    //     APP_TRACE_INFO0((const char *)pValue);
+    memcpy(&power_ctl, pValue, sizeof(powerOptions_t));
+    if (power_ctl.all_on == true) {
+      MXC_GPIO_OutSet(ME17_MAIN_PORT, ME17_MAIN_PIN);
+      MXC_GPIO_OutSet(ME17_PORT, ME17_PIN);
+      MXC_GPIO_OutSet(ME14_PORT, ME14_PIN);
+      MXC_GPIO_OutSet(ME18_PORT, ME18_PIN);
+      APP_TRACE_INFO0("All on");
 
-    //     /* send back some data */
-    //     datsSendData(connId);
-    // }
-    return ATT_SUCCESS;
+    } else if (power_ctl.all_off == true) {
+      MXC_GPIO_OutClr(ME17_MAIN_PORT, ME17_MAIN_PIN);
+      MXC_GPIO_OutClr(ME17_PORT, ME17_PIN);
+      MXC_GPIO_OutClr(ME14_PORT, ME14_PIN);
+      MXC_GPIO_OutClr(ME18_PORT, ME18_PIN);
+      APP_TRACE_INFO0("All off");
+
+    } else {
+
+      if (power_ctl.me17_main_state) {
+        APP_TRACE_INFO0("ME17 Main turned on");
+        MXC_GPIO_OutSet(ME17_MAIN_PORT, ME17_MAIN_PIN);
+      } else {
+        APP_TRACE_INFO0("ME17 Main turned off");
+        MXC_GPIO_OutClr(ME17_MAIN_PORT, ME17_MAIN_PIN);
+      }
+
+      if (power_ctl.me17_state) {
+        APP_TRACE_INFO0("ME17 turned on");
+        MXC_GPIO_OutSet(ME17_PORT, ME17_PIN);
+      } else {
+        APP_TRACE_INFO0("ME17 turned off");
+        MXC_GPIO_OutClr(ME17_PORT, ME17_PIN);
+      }
+
+      if (power_ctl.me14_state) {
+        APP_TRACE_INFO0("ME14 turned on");
+        MXC_GPIO_OutSet(ME14_PORT, ME14_PIN);
+      } else {
+        APP_TRACE_INFO0("ME14 turned off");
+        MXC_GPIO_OutClr(ME14_PORT, ME14_PIN);
+      }
+
+      if (power_ctl.me18_state) {
+        APP_TRACE_INFO0("ME18 turned on");
+        MXC_GPIO_OutSet(ME18_PORT, ME18_PIN);
+      } else {
+        APP_TRACE_INFO0("ME18 turned off");
+        MXC_GPIO_OutClr(ME18_PORT, ME18_PIN);
+      }
+    }
+   
+  } else {
+    APP_TRACE_INFO0("Len did not match");
+  }
+ 
+  return ATT_SUCCESS;
 }
 
 /*************************************************************************************************/
