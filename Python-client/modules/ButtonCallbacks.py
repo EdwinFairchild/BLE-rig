@@ -40,6 +40,7 @@ def connect(interface):
             interface.bleLoop = ble_ctl.BleakLoop()
             interface.PowerCtlFile_thread = ble_ctl.Power_Ctl_File()
             interface.PowerCtlFile_thread.bleLoop = interface.bleLoop
+            interface.PowerCtlFile_thread.interface = interface
             interface.bleLoop.disconnectSignal.connect(lambda state: Slots.disconnect(interface, state))
             interface.bleLoop.ble_address = interface.ble_rig_addr
             interface.connected_address = interface.bleLoop.ble_address

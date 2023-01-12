@@ -42,31 +42,28 @@ class Power_Ctl_File(QThread):
         #TODO : make buttons also update the file and update the previous value so it does not trigger a
         # state change twice
     prevME18 = "0"
+    interface = None
     def run(self):
         while self.bleLoop.connect==True:
             self.read_power_ctl()
             QThread.msleep(250)
-
             
 
     def read_power_ctl(self):
 
         file1 = open('power_ctl.log', 'r')
         Lines = file1.readlines()
-        
         count = 0
         # Strips the newline character
         for line in Lines:
-            if count == 4:
+            if count == 1:
                 if self.prevME18 != line.strip():
+                    print(f"Value changed to {line.strip()}")
                     self.prevME18 = line.strip()
-                    if line.strip() == "1":
-                        
-                        self.bleLoop.ME18_STATE = (1).to_bytes(1, byteorder='little', signed=False)
-                        self.bleLoop.ALL_OFF = (0).to_bytes(1, byteorder='little', signed=False)
+                    if line.strip() == "True":
+                        Slots.set_device_power_settings(self.interface,"me14",True)     
                     else:
-                        self.bleLoop.ME18_STATE = (0).to_bytes(1, byteorder='little', signed=False)
-                        self.bleLoop.ALL_ON = (0).to_bytes(1, byteorder='little', signed=False)
+                        Slots.set_device_power_settings(self.interface,"me14",False)
                     self.bleLoop.writeChar = True
 
    
@@ -92,13 +89,10 @@ class BleakLoop(QThread):
     def handle_disconnect(self, _: BleakClient):
         # cancelling all tasks effectively ends the program
         #Not working
-        #self.disconnectSignal.emit(True)
         Console.log("Disconnected")
         self.connect = False
-        # in case this happened because of a failed update
-
-        # for task in asyncio.all_tasks():
-        #     task.cancel()
+        self.disconnectSignal.emit(True)
+         # atempt connection again
     # -------------------------------------------------------------------------
 
     async def disconenctBLE(self, client: BleakClient):

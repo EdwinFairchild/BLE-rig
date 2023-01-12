@@ -25,8 +25,9 @@ off_background= [255, 255, 255]
 def disconnect(interface, state):
     
     interface.bleLoop.exit()
+    interface.PowerCtlFile_thread.exit()
     interface.connected_state = False
-    print("interface set to")
+    
 
 def set_device_power_settings(interface, device,state):
     global devices, text_color, on_background, off_background
