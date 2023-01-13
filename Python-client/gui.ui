@@ -6,15 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>711</width>
-    <height>483</height>
+    <width>1218</width>
+    <height>667</height>
    </rect>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>14</pointsize>
+   </font>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_4" stretch="2,1,2">
+   <layout class="QVBoxLayout" name="verticalLayout_4">
     <item>
      <widget class="QPushButton" name="btn_all_on">
       <property name="minimumSize">
@@ -207,17 +212,72 @@
     </item>
    </layout>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>711</width>
-     <height>22</height>
-    </rect>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
+  <widget class="QToolBar" name="toolBar">
+   <property name="windowTitle">
+    <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>50</width>
+     <height>50</height>
+    </size>
+   </property>
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="actionConnect_BLE"/>
+   <addaction name="actionConnect_UART"/>
+   <addaction name="actionConnect_Socket"/>
+  </widget>
+  <action name="actionConnect_BLE">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../resources/bluetooth.png</normaloff>../resources/bluetooth.png</iconset>
+   </property>
+   <property name="text">
+    <string>Connect BLE</string>
+   </property>
+  </action>
+  <action name="actionConnect_UART">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../resources/vga-cable.png</normaloff>../resources/vga-cable.png</iconset>
+   </property>
+   <property name="text">
+    <string>Connect UART</string>
+   </property>
+  </action>
+  <action name="actionConnect_Socket">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../resources/network.png</normaloff>../resources/network.png</iconset>
+   </property>
+   <property name="text">
+    <string>Connect Socket</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

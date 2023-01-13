@@ -32,34 +32,6 @@ def get_crc32():
 # ------------------------------------------------------------------------
 
 
-def connect(interface):
-    # Establish and maintain Bleak connection
-    if interface.connected_state == False:
-        try:
-            # connection stuff
-            interface.bleLoop = ble_ctl.BleakLoop()
-            interface.PowerCtlFile_thread = ble_ctl.Power_Ctl_File()
-            interface.PowerCtlFile_thread.bleLoop = interface.bleLoop
-            interface.PowerCtlFile_thread.interface = interface
-            interface.bleLoop.disconnectSignal.connect(lambda state: Slots.disconnect(interface, state))
-            interface.bleLoop.ble_address = interface.ble_rig_addr
-            interface.connected_address = interface.bleLoop.ble_address
-            interface.bleLoop.start()
-            interface.PowerCtlFile_thread.start()
-            interface.connected_state = True
-        except Exception as err:
-            Console.errMsg(err)
-            interface.connected_state = False
-    else:
-        try:
-            # connection stuff
-            interface.bleLoop.disconnect_triggered = True
-
-        except Exception as err:
-            Console.errMsg(err)
-    # ------------------------------------------------------------------------
-
-
 def btnMainMe17(interface):
     state = not Slots.devices["me17_main"][2]
     Slots.set_device_power_settings(interface,"me17_main",state)

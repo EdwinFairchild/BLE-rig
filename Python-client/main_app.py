@@ -37,6 +37,9 @@ class MainInterface(QMainWindow):
     connected_state = False
     ble_rig_addr = "00:18:80:30:88:FB"
     disconnectSignal = pyqtSignal(bool)
+    bleConnectionActive = False
+    uartConnectionActive = False
+    socketConnectionActive = False
     
     def __init__(self):
         QMainWindow.__init__(self)
@@ -48,8 +51,10 @@ class MainInterface(QMainWindow):
         Slots.devices["me17"] = [self.ui.btn_me17, 2,False]
         Slots.devices["me14"] = [self.ui.btn_me14, 3,False]
         Slots.devices["me18"] = [self.ui.btn_me18, 4,False]
-        print(f"The value is : {int(Slots.devices['me17_main'][2])}")
-        ButtonCallbacks.connect(self)
+        #ButtonCallbacks.connect(self)
+
+        self.ui.statusbar.showMessage("we in this bitch")
+        self.ui.actionConnect_BLE.triggered.connect(lambda state: Slots.connect_BLE(interface))
 
     # ------------------------------------------------------------------------
     # def eventFilter(self, source, event):
