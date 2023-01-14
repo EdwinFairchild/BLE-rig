@@ -1,4 +1,3 @@
-
 from main_app import *
 from modules import Slots
 from modules import Console

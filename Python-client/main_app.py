@@ -23,7 +23,7 @@ import time
 import atexit
 from asyncqt import QEventLoop
 import webbrowser
-
+import subprocess
 QtWidgets.QApplication.setAttribute(
     QtCore.Qt.AA_EnableHighDpiScaling, True)  # enable highdpi scaling
 QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
@@ -58,8 +58,12 @@ class MainInterface(QMainWindow):
         self.ui.statusbar.showMessage("we in this bitch")
         self.ui.actionConnect_BLE.triggered.connect(
             lambda state: Slots.connect_BLE(interface))
+        # find serial port of my control deivce
+        port = subprocess.getoutput(
+            "ls -la /dev/serial/by-id | grep -n '04090000e7b6039700000000000000000000000097969906' | rev | cut -d '/' -f1 | rev")
+
         self.ui.actionConnect_UART.triggered.connect(
-            lambda state: serialReader.open_ports(self, "/dev/ttyACM0"))
+            lambda state: serialReader.open_ports(self, f"/dev/{port}"))
 
     # ------------------------------------------------------------------------
     # def eventFilter(self, source, event):
@@ -90,7 +94,6 @@ def exitFunc():
             task.cancel()
     except Exception as e:
         pass
-
 
     # ------------------------------------------------------------------------
 if __name__ == '__main__':
