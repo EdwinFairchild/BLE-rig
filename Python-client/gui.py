@@ -50,7 +50,25 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.btn_main_me17.setFont(font)
-        self.btn_main_me17.setStyleSheet("")
+        self.btn_main_me17.setStyleSheet("QPushButton{\n"
+"    color: rgb(0, 0, 0);\n"
+"        background-color: rgb(255,255,255);\n"
+"    border:none;\n"
+"border-radius:5px;\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    color: rgb(28, 28, 28);\n"
+"        background-color: rgb(140,170,255);\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    \n"
+"        color: rgb(28, 28, 28);\n"
+"    background-color: rgb(110,140,255);\n"
+"}")
         self.btn_main_me17.setObjectName("btn_main_me17")
         self.verticalLayout.addWidget(self.btn_main_me17)
         self.btn_me17 = QtWidgets.QPushButton(self.centralwidget)
@@ -61,7 +79,25 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.btn_me17.setFont(font)
-        self.btn_me17.setStyleSheet("")
+        self.btn_me17.setStyleSheet("QPushButton{\n"
+"    color: rgb(0, 0, 0);\n"
+"        background-color: rgb(255,255,255);\n"
+"    border:none;\n"
+"border-radius:5px;\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    color: rgb(28, 28, 28);\n"
+"        background-color: rgb(140,170,255);\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    \n"
+"        color: rgb(28, 28, 28);\n"
+"    background-color: rgb(110,140,255);\n"
+"}")
         self.btn_me17.setObjectName("btn_me17")
         self.verticalLayout.addWidget(self.btn_me17)
         self.verticalLayout.setStretch(0, 1)
@@ -78,7 +114,25 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.btn_me14.setFont(font)
-        self.btn_me14.setStyleSheet("")
+        self.btn_me14.setStyleSheet("QPushButton{\n"
+"    color: rgb(0, 0, 0);\n"
+"        background-color: rgb(255,255,255);\n"
+"    border:none;\n"
+"border-radius:5px;\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    color: rgb(28, 28, 28);\n"
+"        background-color: rgb(140,170,255);\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    \n"
+"        color: rgb(28, 28, 28);\n"
+"    background-color: rgb(110,140,255);\n"
+"}")
         self.btn_me14.setObjectName("btn_me14")
         self.verticalLayout_2.addWidget(self.btn_me14)
         self.btn_me18 = QtWidgets.QPushButton(self.centralwidget)
@@ -89,7 +143,25 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.btn_me18.setFont(font)
-        self.btn_me18.setStyleSheet("")
+        self.btn_me18.setStyleSheet("QPushButton{\n"
+"    color: rgb(0, 0, 0);\n"
+"        background-color: rgb(255,255,255);\n"
+"    border:none;\n"
+"border-radius:5px;\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:hover{\n"
+"    color: rgb(28, 28, 28);\n"
+"        background-color: rgb(140,170,255);\n"
+"\n"
+"}\n"
+"\n"
+"QPushButton:pressed{\n"
+"    \n"
+"        color: rgb(28, 28, 28);\n"
+"    background-color: rgb(110,140,255);\n"
+"}")
         self.btn_me18.setObjectName("btn_me18")
         self.verticalLayout_2.addWidget(self.btn_me18)
         self.verticalLayout_2.setStretch(0, 1)

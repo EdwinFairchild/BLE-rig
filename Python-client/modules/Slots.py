@@ -55,7 +55,7 @@ def set_device_power_settings(interface, device, state):
         interface.bleLoop.writeChar = True
 
     if interface.uartConnectionActive == True:
-        print(f"{device.replace('_', '')} {int(state)}\n")
+        # change from "me17_main" to "me17main"
         serialReader.uart_send_power_ctl(
             interface, f"{device.replace('_', '')} {int(state)}\n")
 

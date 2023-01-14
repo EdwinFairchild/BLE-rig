@@ -14,6 +14,8 @@ def open_ports(interface, serial_port=None):
         interface.ui.statusbar.showMessage(
             "Serial port connection established!")
         interface.uartConnectionActive = True
+        interface.ui.actionConnect_BLE.setEnabled(False)
+        interface.ui.actionConnect_Socket.setEnabled(False)
 
 
 # --------------------------------------------------------------------------------------
@@ -60,4 +62,4 @@ def uart_send_power_ctl(interface, send=None):
             for char in char_list:
                 # start test, send command
                 interface.serial_port.write(bytes(char, encoding='utf-8'))
-                time.sleep(0.005)
+                time.sleep(0.001)

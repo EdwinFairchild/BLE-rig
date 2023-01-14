@@ -82,7 +82,25 @@
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true"/>
+           <string notr="true">QPushButton{
+	color: rgb(0, 0, 0);
+		background-color: rgb(255,255,255);
+	border:none;
+border-radius:5px;
+
+}
+
+QPushButton:hover{
+	color: rgb(28, 28, 28);
+		background-color: rgb(140,170,255);
+
+}
+
+QPushButton:pressed{
+	
+		color: rgb(28, 28, 28);
+	background-color: rgb(110,140,255);
+}</string>
           </property>
           <property name="text">
            <string>ME17_Main</string>
@@ -111,7 +129,25 @@
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true"/>
+           <string notr="true">QPushButton{
+	color: rgb(0, 0, 0);
+		background-color: rgb(255,255,255);
+	border:none;
+border-radius:5px;
+
+}
+
+QPushButton:hover{
+	color: rgb(28, 28, 28);
+		background-color: rgb(140,170,255);
+
+}
+
+QPushButton:pressed{
+	
+		color: rgb(28, 28, 28);
+	background-color: rgb(110,140,255);
+}</string>
           </property>
           <property name="text">
            <string>ME17</string>
@@ -147,7 +183,25 @@
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true"/>
+           <string notr="true">QPushButton{
+	color: rgb(0, 0, 0);
+		background-color: rgb(255,255,255);
+	border:none;
+border-radius:5px;
+
+}
+
+QPushButton:hover{
+	color: rgb(28, 28, 28);
+		background-color: rgb(140,170,255);
+
+}
+
+QPushButton:pressed{
+	
+		color: rgb(28, 28, 28);
+	background-color: rgb(110,140,255);
+}</string>
           </property>
           <property name="text">
            <string>ME14</string>
@@ -176,7 +230,25 @@
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true"/>
+           <string notr="true">QPushButton{
+	color: rgb(0, 0, 0);
+		background-color: rgb(255,255,255);
+	border:none;
+border-radius:5px;
+
+}
+
+QPushButton:hover{
+	color: rgb(28, 28, 28);
+		background-color: rgb(140,170,255);
+
+}
+
+QPushButton:pressed{
+	
+		color: rgb(28, 28, 28);
+	background-color: rgb(110,140,255);
+}</string>
           </property>
           <property name="text">
            <string>ME18</string>
