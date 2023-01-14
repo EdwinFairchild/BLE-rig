@@ -13,6 +13,7 @@ from modules import ButtonCallbacks
 from modules import BLE_functions as ble_ctl
 from modules import Console
 from modules import Slots
+from modules import serialReader
 from bleak import *
 import asyncio
 import platform
@@ -40,21 +41,25 @@ class MainInterface(QMainWindow):
     bleConnectionActive = False
     uartConnectionActive = False
     socketConnectionActive = False
-    
+    serial_port = None
+
     def __init__(self):
         QMainWindow.__init__(self)
         # setup gui
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         ButtonCallbacks.register_button_callbacks(self)
-        Slots.devices["me17_main"] = [self.ui.btn_main_me17, 1,False]
-        Slots.devices["me17"] = [self.ui.btn_me17, 2,False]
-        Slots.devices["me14"] = [self.ui.btn_me14, 3,False]
-        Slots.devices["me18"] = [self.ui.btn_me18, 4,False]
-        #ButtonCallbacks.connect(self)
+        Slots.devices["me17_main"] = [self.ui.btn_main_me17, 1, False]
+        Slots.devices["me17"] = [self.ui.btn_me17, 2, False]
+        Slots.devices["me14"] = [self.ui.btn_me14, 3, False]
+        Slots.devices["me18"] = [self.ui.btn_me18, 4, False]
+        # ButtonCallbacks.connect(self)
 
         self.ui.statusbar.showMessage("we in this bitch")
-        self.ui.actionConnect_BLE.triggered.connect(lambda state: Slots.connect_BLE(interface))
+        self.ui.actionConnect_BLE.triggered.connect(
+            lambda state: Slots.connect_BLE(interface))
+        self.ui.actionConnect_UART.triggered.connect(
+            lambda state: serialReader.open_ports(self, "/dev/ttyACM0"))
 
     # ------------------------------------------------------------------------
     # def eventFilter(self, source, event):
@@ -71,10 +76,10 @@ class MainInterface(QMainWindow):
 
 def exitFunc():
     global interface
-    
+
     try:
         interface.bleLoop.disconnect_triggered = True
-        while interface.bleLoop.connect==True:
+        while interface.bleLoop.connect == True:
             pass
         #     print(interface.connected_state)
     except Exception as e:
