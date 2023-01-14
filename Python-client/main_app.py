@@ -13,6 +13,7 @@ from modules import ButtonCallbacks
 from modules import BLE_functions as ble_ctl
 from modules import Console
 from modules import Slots
+from modules import serialReader
 from bleak import *
 import asyncio
 import platform
@@ -22,7 +23,7 @@ import time
 import atexit
 from asyncqt import QEventLoop
 import webbrowser
-
+import subprocess
 QtWidgets.QApplication.setAttribute(
     QtCore.Qt.AA_EnableHighDpiScaling, True)  # enable highdpi scaling
 QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
@@ -37,19 +38,32 @@ class MainInterface(QMainWindow):
     connected_state = False
     ble_rig_addr = "00:18:80:30:88:FB"
     disconnectSignal = pyqtSignal(bool)
-    
+    bleConnectionActive = False
+    uartConnectionActive = False
+    socketConnectionActive = False
+    serial_port = None
+
     def __init__(self):
         QMainWindow.__init__(self)
         # setup gui
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         ButtonCallbacks.register_button_callbacks(self)
-        Slots.devices["me17_main"] = [self.ui.btn_main_me17, 1,False]
-        Slots.devices["me17"] = [self.ui.btn_me17, 2,False]
-        Slots.devices["me14"] = [self.ui.btn_me14, 3,False]
-        Slots.devices["me18"] = [self.ui.btn_me18, 4,False]
-        print(f"The value is : {int(Slots.devices['me17_main'][2])}")
-        ButtonCallbacks.connect(self)
+        Slots.devices["me17_main"] = [self.ui.btn_main_me17, 1, False]
+        Slots.devices["me17"] = [self.ui.btn_me17, 2, False]
+        Slots.devices["me14"] = [self.ui.btn_me14, 3, False]
+        Slots.devices["me18"] = [self.ui.btn_me18, 4, False]
+        # ButtonCallbacks.connect(self)
+
+        self.ui.statusbar.showMessage("we in this bitch")
+        self.ui.actionConnect_BLE.triggered.connect(
+            lambda state: Slots.connect_BLE(interface))
+        # find serial port of my control deivce
+        port = subprocess.getoutput(
+            "ls -la /dev/serial/by-id | grep -n '04090000e7b6039700000000000000000000000097969906' | rev | cut -d '/' -f1 | rev")
+
+        self.ui.actionConnect_UART.triggered.connect(
+            lambda state: serialReader.open_ports(self, f"/dev/{port}"))
 
     # ------------------------------------------------------------------------
     # def eventFilter(self, source, event):
@@ -66,10 +80,10 @@ class MainInterface(QMainWindow):
 
 def exitFunc():
     global interface
-    
+
     try:
         interface.bleLoop.disconnect_triggered = True
-        while interface.bleLoop.connect==True:
+        while interface.bleLoop.connect == True:
             pass
         #     print(interface.connected_state)
     except Exception as e:
@@ -80,7 +94,6 @@ def exitFunc():
             task.cancel()
     except Exception as e:
         pass
-
 
     # ------------------------------------------------------------------------
 if __name__ == '__main__':

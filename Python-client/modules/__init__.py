@@ -18,3 +18,5 @@ from . ButtonCallbacks import *
 
 # Import Signal callbacks
 from . Slots import *
+
+from . serialReader import *

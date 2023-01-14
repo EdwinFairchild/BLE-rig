@@ -12,7 +12,7 @@ LIB_CORDIO = 1
 
 # Optimize for size
 MXC_OPTIMIZE_CFLAGS = -Os
-
+BOARD=FTHR_Apps_P1
 # Disable central and observer.  They're
 # not needed for this server app.
 INIT_PERIPHERAL = 1
