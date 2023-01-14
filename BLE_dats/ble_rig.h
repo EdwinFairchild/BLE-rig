@@ -12,6 +12,9 @@
 #include "board.h"
 #include "gpio.h"
 #include "wsf_trace.h"
+#include "util/terminal.h"
+#include "app_ui.h"
+#include "util/print.h"
 typedef enum __attribute__((__packed__)) {
   POWER_OPTIONS,
   RESERVED

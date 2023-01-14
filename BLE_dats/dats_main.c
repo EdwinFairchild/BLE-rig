@@ -1076,6 +1076,7 @@ void DatsStart(void)
     AppUiBtnRegister(datsBtnCback);
 
     config_gpio();
+    register_at_Commands();
 
 #if (BT_VER > 8)
     DmPhyInit();
