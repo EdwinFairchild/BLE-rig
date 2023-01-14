@@ -16,11 +16,20 @@ powerOptions_t power_ctl;
 uint8_t hanlderId = 0;
 /*! \brief    Custom Command Handler. */
 static uint8_t cmd_me17MainState(uint32_t argc, char **argv);
-
+static uint8_t cmd_me17State(uint32_t argc, char **argv);
+static uint8_t cmd_me14State(uint32_t argc, char **argv);
+static uint8_t cmd_me18State(uint32_t argc, char **argv);
+static uint8_t cmd_allOn(uint32_t argc, char **argv);
+static uint8_t cmd_allOff(uint32_t argc, char **argv);
 /*! \brief    command list */
 terminalCommand_t appTerminalCustomCommandList[] = {
 
     {NULL, "me17main", "<power state>>", cmd_me17MainState},
+    {NULL, "me17", "<power state>>", cmd_me17State},
+    {NULL, "me14", "<power state>>", cmd_me14State},
+    {NULL, "me18", "<power state>>", cmd_me18State},
+    {NULL, "allon", "<power state>>", cmd_allOn},
+    {NULL, "alloff", "<power state>>", cmd_allOff},
     {NULL, NULL, NULL, NULL}, // used as delimter for end of list
 
 };
@@ -155,12 +164,116 @@ static uint8_t cmd_me17MainState(uint32_t argc, char **argv) {
     return TERMINAL_ERROR_TOO_FEW_ARGUMENTS;
   } else if (argc == 2) {
     if (atoi(argv[1]) == 1) {
-      APP_TRACE_INFO0("tunred on ecieved");
+
       power_ctl.me17_main_state = ON;
     } else {
-      APP_TRACE_INFO0("tunred off ecieved");
+
       power_ctl.me17_main_state = OFF;
     }
+    WsfMsgSend(hanlderId, pMsg);
+  } else {
+    return TERMINAL_ERROR_TOO_MANY_ARGUMENTS;
+  }
+
+  return TERMINAL_ERROR_OK;
+}
+static uint8_t cmd_me17State(uint32_t argc, char **argv) {
+  dmEvt_t *pMsg;
+  pMsg = WsfMsgAlloc(sizeof(attEvt_t));
+  pMsg->hdr.event = DM_VENDOR_SPEC_IND;
+
+  if (argc < 2) {
+    return TERMINAL_ERROR_TOO_FEW_ARGUMENTS;
+  } else if (argc == 2) {
+    if (atoi(argv[1]) == 1) {
+
+      power_ctl.me17_state = ON;
+    } else {
+
+      power_ctl.me17_state = OFF;
+    }
+    WsfMsgSend(hanlderId, pMsg);
+  } else {
+    return TERMINAL_ERROR_TOO_MANY_ARGUMENTS;
+  }
+
+  return TERMINAL_ERROR_OK;
+}
+static uint8_t cmd_me14State(uint32_t argc, char **argv) {
+  dmEvt_t *pMsg;
+  pMsg = WsfMsgAlloc(sizeof(attEvt_t));
+  pMsg->hdr.event = DM_VENDOR_SPEC_IND;
+
+  if (argc < 2) {
+    return TERMINAL_ERROR_TOO_FEW_ARGUMENTS;
+  } else if (argc == 2) {
+    if (atoi(argv[1]) == 1) {
+
+      power_ctl.me14_state = ON;
+    } else {
+
+      power_ctl.me14_state = OFF;
+    }
+    WsfMsgSend(hanlderId, pMsg);
+  } else {
+    return TERMINAL_ERROR_TOO_MANY_ARGUMENTS;
+  }
+
+  return TERMINAL_ERROR_OK;
+}
+static uint8_t cmd_me18State(uint32_t argc, char **argv) {
+  dmEvt_t *pMsg;
+  pMsg = WsfMsgAlloc(sizeof(attEvt_t));
+  pMsg->hdr.event = DM_VENDOR_SPEC_IND;
+
+  if (argc < 2) {
+    return TERMINAL_ERROR_TOO_FEW_ARGUMENTS;
+  } else if (argc == 2) {
+    if (atoi(argv[1]) == 1) {
+
+      power_ctl.me18_state = ON;
+    } else {
+
+      power_ctl.me18_state = OFF;
+    }
+    WsfMsgSend(hanlderId, pMsg);
+  } else {
+    return TERMINAL_ERROR_TOO_MANY_ARGUMENTS;
+  }
+
+  return TERMINAL_ERROR_OK;
+}
+static uint8_t cmd_allOn(uint32_t argc, char **argv) {
+  dmEvt_t *pMsg;
+  pMsg = WsfMsgAlloc(sizeof(attEvt_t));
+  pMsg->hdr.event = DM_VENDOR_SPEC_IND;
+
+  if (argc < 1) {
+    return TERMINAL_ERROR_TOO_FEW_ARGUMENTS;
+  } else if (argc == 1) {
+    power_ctl.me17_main_state = ON;
+    power_ctl.me17_state = ON;
+    power_ctl.me14_state = ON;
+    power_ctl.me18_state = ON;
+    WsfMsgSend(hanlderId, pMsg);
+  } else {
+    return TERMINAL_ERROR_TOO_MANY_ARGUMENTS;
+  }
+
+  return TERMINAL_ERROR_OK;
+}
+static uint8_t cmd_allOff(uint32_t argc, char **argv) {
+  dmEvt_t *pMsg;
+  pMsg = WsfMsgAlloc(sizeof(attEvt_t));
+  pMsg->hdr.event = DM_VENDOR_SPEC_IND;
+
+  if (argc < 1) {
+    return TERMINAL_ERROR_TOO_FEW_ARGUMENTS;
+  } else if (argc == 1) {
+    power_ctl.me17_main_state = OFF;
+    power_ctl.me17_state = OFF;
+    power_ctl.me14_state = OFF;
+    power_ctl.me18_state = OFF;
     WsfMsgSend(hanlderId, pMsg);
   } else {
     return TERMINAL_ERROR_TOO_MANY_ARGUMENTS;
