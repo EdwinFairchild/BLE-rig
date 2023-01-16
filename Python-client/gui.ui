@@ -36,7 +36,25 @@
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);</string>
+       <string notr="true">QPushButton{
+	color: rgb(0, 0, 0);
+		background-color: rgb(255,255,255);
+	border:none;
+border-radius:5px;
+
+}
+
+QPushButton:hover{
+	color: rgb(28, 28, 28);
+		background-color: rgb(140,170,255);
+
+}
+
+QPushButton:pressed{
+	
+		color: rgb(28, 28, 28);
+	background-color: rgb(110,140,255);
+}</string>
       </property>
       <property name="text">
        <string>All On</string>
@@ -108,60 +126,6 @@ QPushButton:pressed{
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="btn_me17">
-          <property name="minimumSize">
-           <size>
-            <width>0</width>
-            <height>100</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>99999</width>
-            <height>99999</height>
-           </size>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton{
-	color: rgb(0, 0, 0);
-		background-color: rgb(255,255,255);
-	border:none;
-border-radius:5px;
-
-}
-
-QPushButton:hover{
-	color: rgb(28, 28, 28);
-		background-color: rgb(140,170,255);
-
-}
-
-QPushButton:pressed{
-	
-		color: rgb(28, 28, 28);
-	background-color: rgb(110,140,255);
-}</string>
-          </property>
-          <property name="text">
-           <string>ME17</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,1">
-        <property name="spacing">
-         <number>5</number>
-        </property>
-        <item>
          <widget class="QPushButton" name="btn_me14">
           <property name="minimumSize">
            <size>
@@ -205,6 +169,60 @@ QPushButton:pressed{
           </property>
           <property name="text">
            <string>ME14</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,1">
+        <property name="spacing">
+         <number>5</number>
+        </property>
+        <item>
+         <widget class="QPushButton" name="btn_me17">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>100</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>99999</width>
+            <height>99999</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>16</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+	color: rgb(0, 0, 0);
+		background-color: rgb(255,255,255);
+	border:none;
+border-radius:5px;
+
+}
+
+QPushButton:hover{
+	color: rgb(28, 28, 28);
+		background-color: rgb(140,170,255);
+
+}
+
+QPushButton:pressed{
+	
+		color: rgb(28, 28, 28);
+	background-color: rgb(110,140,255);
+}</string>
+          </property>
+          <property name="text">
+           <string>ME17</string>
           </property>
          </widget>
         </item>
@@ -275,7 +293,25 @@ QPushButton:pressed{
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);</string>
+       <string notr="true">QPushButton{
+	color: rgb(0, 0, 0);
+		background-color: rgb(255,255,255);
+	border:none;
+border-radius:5px;
+
+}
+
+QPushButton:hover{
+	color: rgb(28, 28, 28);
+		background-color: rgb(140,170,255);
+
+}
+
+QPushButton:pressed{
+	
+		color: rgb(28, 28, 28);
+	background-color: rgb(110,140,255);
+}</string>
       </property>
       <property name="text">
        <string>All OFF</string>
