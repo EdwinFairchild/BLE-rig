@@ -10,8 +10,13 @@ if [[ $currentState -eq 0 ]]; then
 else
     currentState=0
 fi
-echo $currentState
-keyValuePairs=$(/usr/bin/python3 -c "import sys, json; fileDict=json.load(open('$FILE')); fileDict['me17_main']['state'] = $currentState; file = open('$FILE', 'w'); json.dump(fileDict,file,indent=4);file.close();print(fileDict)")
-echo $keyValuePairs
-date
+
+keyValuePairs=$(/usr/bin/python3 -c "import sys, json; 
+fileDict=json.load(open('$FILE')); 
+fileDict['me17_main']['state'] = $currentState; 
+file = open('$FILE', 'w'); 
+json.dump(fileDict,file,indent=4);
+file.close();")
+
+
 echo "me17main $currentState" >/dev/ttyACM0
