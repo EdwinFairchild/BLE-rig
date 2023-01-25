@@ -1,9 +1,11 @@
 #!/bin/bash
-#configure UART settings
-stty -F /dev/ttyACM0 115200
 
-#get current state of the device
-FILE=/home/eddie/my-scripts/streamdeck/ble_devices.json
+# file used to track state and store controller serial
+FILE=/home/eddie/playground/BLE-rig/resources/ble_devices.json
+#configure UART settings
+controller_serial=$(/usr/bin/python3 -c "import sys, json; print(json.load(open('$FILE'))['controller']['serial'])")
+controller_port=/dev/"$(ls -la /dev/serial/by-id | grep -n $controller_serial | rev | cut -d "/" -f1 | rev)"
+stty -F $controller_port 115200
 
 keyValuePairs=$(/usr/bin/python3 -c "import sys, json; 
 fileDict=json.load(open('$FILE')); 
@@ -15,4 +17,4 @@ file = open('$FILE', 'w');
 json.dump(fileDict,file,indent=4);
 file.close();")
 
-echo "allon" >/dev/ttyACM0
+echo "allon" >$controller_port
